@@ -619,6 +619,8 @@ html[dir=rtl] .cat-hero .ch-bg{right:auto;left:0;-webkit-mask-image:linear-gradi
 .tile .tbg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transition:transform .35s}
 .tile.img::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(0,0,0,.6),rgba(0,0,0,.05) 65%)}
 .tile.img:hover .tbg{transform:scale(1.05)}
+.fbico{display:grid;place-items:center;width:100%;height:100%}.fbico svg{width:46%;height:46%}
+.quick .fbico{width:22px;height:22px}.quick .fbico svg{width:22px;height:22px}
 </style>
 </head>
 <body>
@@ -1034,6 +1036,7 @@ const imgUrl = s => { s = String(s || "").trim(); if (!s) return "images/logo.pn
 /* if a Drive image fails on lh3, try Drive's thumbnail link once, then the logo */
 document.addEventListener("error", e => {
   const im = e.target; if (!im || im.tagName !== "IMG") return;
+  if (im.dataset.k !== undefined){ const sp = document.createElement("span"); sp.className = "fbico"; sp.innerHTML = icon(im.dataset.k); im.replaceWith(sp); return; }
   const m = (im.getAttribute("src") || "").match(/lh3\.googleusercontent\.com\/d\/([-\w]+)/);
   if (m && !im.dataset.fb){ im.dataset.fb = 1; im.src = "https://drive.google.com/thumbnail?id=" + m[1] + "&sz=w1000"; }
   else if (im.dataset.fb !== "2" && !/logo\.png$/.test(im.src)){ im.dataset.fb = "2"; im.src = "images/logo.png"; }
@@ -1176,7 +1179,7 @@ async function loadCatInfo(){
 }
 /* picture for a category: your sheet photo first, then the designed icon, then the line icon */
 const catImgSrc = k => CAT_PHOTO[k] ? imgUrl(CAT_PHOTO[k]) : CAT_PICS.has(catSlug(k)) ? `images/cat/${catSlug(k)}.webp` : "";
-const catIco = k => CAT_PHOTO[k] ? `<span class="circ pic photo"><img src="${esc(imgUrl(CAT_PHOTO[k]))}" alt="" loading="lazy"></span>` : CAT_PICS.has(catSlug(k)) ? `<span class="circ pic"><img src="images/cat/${catSlug(k)}.webp" alt="" loading="lazy" width="160" height="160"></span>` : `<span class="circ">${icon(k)}</span>`;
+const catIco = k => CAT_PHOTO[k] ? `<span class="circ pic photo"><img src="${esc(imgUrl(CAT_PHOTO[k]))}" alt="" loading="lazy"></span>` : CAT_PICS.has(catSlug(k)) ? `<span class="circ pic"><img src="images/cat/${catSlug(k)}.webp" data-k="${esc(k)}" alt="" loading="lazy" width="160" height="160"></span>` : `<span class="circ">${icon(k)}</span>`;
 function renderCats(){
   const counts = {};
   PRODUCTS.forEach(p => p.cats.forEach(c => counts[c] = (counts[c] || 0) + 1));
@@ -1211,7 +1214,7 @@ function renderSide(){
   const tiles = CARDS.filter(c => c.slot === "tile").slice(0, 2), side = $(".hero .side");
   if (!tiles.length || !side) return;
   side.innerHTML = tiles.map((c, n) => { const i = CARDS.indexOf(c);
-    const ico = c.image ? "" : `<span class="ico">${c.type === "category" && catImgSrc(c.val) ? `<img src="${esc(catImgSrc(c.val))}" alt="">` : icon(c.type === "category" ? c.val : "tag")}</span>`;
+    const ico = c.image ? "" : `<span class="ico">${c.type === "category" && catImgSrc(c.val) ? `<img src="${esc(catImgSrc(c.val))}" ${CAT_PHOTO[c.val] ? "" : `data-k="${esc(c.val)}"`} alt="">` : icon(c.type === "category" ? c.val : "tag")}</span>`;
     return `<button class="tile tl-${esc(c.color)} ${c.image ? "img" : ""}" onclick="cardGo(${i})" aria-label="${esc(c.title + " " + (c.hl || ""))}">
       ${c.image ? `<img class="tbg" src="${esc(imgUrl(c.image))}" alt="">` : ""}${ico}
       <b>${esc(c.title || "")}${c.hl ? `<br>${esc(c.hl)}` : ""}</b>${c.text ? `<small>${esc(c.text)}</small>` : ""}</button>`; }).join("");
@@ -1426,7 +1429,7 @@ function render(){
   if (landing){
     const tone = HERO_TONES[[...current].reduce((a, ch) => a + ch.charCodeAt(0), 0) % HERO_TONES.length].split(",");
     const src = catImgSrc(current);
-    const pic = CAT_BANNER[current] ? "" : src ? `<img class="${CAT_PHOTO[current] ? "ph" : ""}" src="${esc(src)}" alt="">` : `<span class="hic">${icon(current)}</span>`;
+    const pic = CAT_BANNER[current] ? "" : src ? `<img class="${CAT_PHOTO[current] ? "ph" : ""}" src="${esc(src)}" ${CAT_PHOTO[current] ? "" : `data-k="${esc(current)}"`} alt="">` : `<span class="hic">${icon(current)}</span>`;
     hero.innerHTML = `<div class="ch-tx"><span class="ch-k">SHOP ${esc(current.toUpperCase())}</span><h2>Buy ${esc(current)} Online</h2><p>Hand-picked by Umar Deals. Cash on Delivery all over Pakistan.</p></div><div class="ch-pic">${pic}</div>`;
     hero.style.background = `linear-gradient(120deg,${tone[0]},${tone[1]})`;
     hero.classList.toggle("banner", !!CAT_BANNER[current]);
@@ -1577,7 +1580,7 @@ let WISH = lsGet("ud_wish", []), RECENT = lsGet("ud_recent", []);
 function renderQuick(){
   const Q = [["Women Stitched","Women"],["Men Stitched","Men"],["Kids Clothing","Kids"],["Winter","Winter"],["Kitchenware","Kitchen"],["Fashion Accessories","Wallets"],["Car & Bike","Car & Bike"]];
   const has = c => PRODUCTS.some(p => p.cats.includes(c));
-  $("#quick").innerHTML = Q.filter(([c]) => has(c)).map(([c, l]) => { const src = catImgSrc(c); return `<button onclick="setCat('${jsq(c)}',true)">${src ? `<img class="qi ${CAT_PHOTO[c] ? "ph" : ""}" src="${esc(src)}" alt="">` : icon(c)}${esc(l)}</button>`; }).join("")
+  $("#quick").innerHTML = Q.filter(([c]) => has(c)).map(([c, l]) => { const src = catImgSrc(c); return `<button onclick="setCat('${jsq(c)}',true)">${src ? `<img class="qi ${CAT_PHOTO[c] ? "ph" : ""}" src="${esc(src)}" ${CAT_PHOTO[c] ? "" : `data-k="${esc(c)}"`} alt="">` : icon(c)}${esc(l)}</button>`; }).join("")
     + `<button onclick="showSection('under')">${icon("tag")}Under Rs. 1,000</button>`;
 }
 function fillSizes(){
