@@ -3,14 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Umar Deals Pakistan</title>
+<title>Umar Deals Pakistan | Online Shopping with Cash on Delivery</title>
 <meta name="description" content="Umar Deals Pakistan: fashion, kids, kitchen, winter, car and mobile products. Cash on Delivery all over Pakistan.">
 <link rel="icon" href="images/logo.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Umar Deals Pakistan">
 <meta property="og:title" content="Umar Deals Pakistan: Everything in One Place!">
 <meta property="og:description" content="Fashion, kids, kitchen, winter and gadgets. Cash on Delivery all over Pakistan.">
-<meta property="og:image" content="og-image.jpg">
+<meta property="og:image" content="https://umar-deals.pages.dev/og-image.jpg">
+<meta property="og:url" content="https://umar-deals.pages.dev/">
+<link rel="canonical" href="https://umar-deals.pages.dev/">
+<meta name="robots" content="index, follow">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"OnlineStore","name":"Umar Deals Pakistan","alternateName":"Umar Deals","url":"https://umar-deals.pages.dev/","logo":"https://umar-deals.pages.dev/images/logo.png","image":"https://umar-deals.pages.dev/og-image.jpg","description":"Online shopping in Pakistan: fashion, kids, kitchen, winter, car and mobile products with Cash on Delivery.","areaServed":"PK","telephone":"+92-317-1897804","sameAs":["https://www.instagram.com/umardealspakistan","https://www.tiktok.com/@udpkdeals"]}
+</script>
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0A4D36">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -138,6 +144,10 @@ header{position:sticky;top:0;z-index:40;background:rgba(250,246,238,.95);backdro
 .cat:hover .circ{background:radial-gradient(circle at 35% 30%,#fff,#E3F1E8)}
 .cat.on .circ{border-color:var(--gold);box-shadow:0 0 0 4px rgba(245,184,46,.25)}
 .cat.soon .circ{opacity:.7}
+.cat .circ.pic{background:radial-gradient(circle at 35% 30%,#FFFFFF,#F4F8F5)}
+.cat .circ.pic img{width:74%;height:74%;object-fit:contain;filter:drop-shadow(0 2px 3px rgba(10,77,54,.12));transition:transform .2s}
+.cat:hover .circ.pic img{transform:scale(1.08)}
+.cat.soon .circ.pic{opacity:1}
 .cat span{font-size:13px;font-weight:600;text-align:center;line-height:1.2}
 .cat em{font-style:normal;font-size:11px;color:var(--muted);margin-top:-4px}
 .cat.soon em{color:var(--gold-2)}
@@ -420,6 +430,195 @@ footer ul{list-style:none;display:grid;gap:8px}
   .bot-hint{bottom:90px;right:80px}
   .chat{right:0;left:0;bottom:0;width:100%;height:100%;max-height:100%;border-radius:0;z-index:70}
 }
+
+/* ---------- why-choose bar ---------- */
+.whybar{margin-top:16px;border:1.5px solid var(--green);border-radius:14px;overflow:hidden;background:#fff}
+.whybar .wtop{display:flex;align-items:center;gap:14px;background:var(--green);color:#fff;padding:11px 18px;text-decoration:none}
+.whybar .wt{display:flex;align-items:center;gap:8px;font-weight:700;font-size:15px;white-space:nowrap}
+.whybar .wl{margin-left:auto;display:flex;align-items:center;gap:14px;font-size:14px;overflow-x:auto;scrollbar-width:none}
+.whybar .wl::-webkit-scrollbar{display:none}
+.whybar .wl>span{display:flex;align-items:center;gap:7px;white-space:nowrap}
+.whybar .wl b{font-weight:500}
+.whybar .wl i{width:1px;height:16px;background:rgba(255,255,255,.55);flex-shrink:0}
+.whybar .wgo{font-size:22px;line-height:1}
+.whybar svg{width:19px;height:19px}
+.whybar .wtop svg *{stroke:#fff}
+.whybar .wbot{display:flex;align-items:center;gap:9px;color:var(--green);padding:10px 18px;font-size:14px}
+.whybar .wbot svg{flex-shrink:0}
+@media (max-width:860px){.whybar .wtop{flex-wrap:wrap;gap:8px;padding:10px 14px}.whybar .wgo{display:none}.whybar .wl{margin-left:0;width:100%;font-size:13px;flex-wrap:wrap;gap:6px 14px}.whybar .wl i{display:none}.whybar .wl>span{white-space:normal}.whybar .wbot{font-size:12.5px;padding:9px 14px;align-items:flex-start}}
+
+/* ---------- deals (lightning + clearance) ---------- */
+.deals{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.deals.one{grid-template-columns:1fr}
+.dbox{min-width:0}
+.dhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.dhead h2{padding:0!important}
+.dhead .sk{display:none}
+.dhead h2{font-family:inherit;font-size:clamp(20px,2.4vw,28px);font-weight:800;letter-spacing:.5px;margin:0;display:flex;align-items:center;gap:6px}
+.dhead.lt h2{color:#F07C00}
+.dhead.cl h2{color:#D7261E}
+.dhead button{background:none;border:0;font:inherit;font-weight:600;font-size:14px;color:var(--ink);cursor:pointer;white-space:nowrap}
+.drow{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 24px)/3);gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px}
+.deals.one .drow{grid-auto-columns:calc((100% - 60px)/6)}
+.drow::-webkit-scrollbar{display:none}
+.dcard{scroll-snap-align:start;display:flex;flex-direction:column;align-items:stretch;background:none;border:0;padding:0;text-align:left;cursor:pointer;font:inherit;color:inherit;min-width:0}
+.dcard>span{display:block}
+.dcard .im{display:block;width:100%;position:relative;aspect-ratio:1;border-radius:12px;overflow:hidden;background:#fff;border:1px solid var(--line)}
+.dcard .im img{width:100%;height:100%;object-fit:cover;transition:transform .25s}
+.dcard:hover .im img{transform:scale(1.05)}
+.dcard .left{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);background:rgba(20,20,20,.62);color:#fff;font-size:12.5px;font-weight:600;padding:5px 12px;border-radius:999px;white-space:nowrap;backdrop-filter:blur(2px)}
+.dcard .off{position:absolute;left:8px;top:8px;background:#D7261E;color:#fff;font-size:12px;font-weight:700;padding:3px 8px;border-radius:6px}
+.dcard .pr{margin-top:8px;display:flex!important;align-items:baseline;gap:6px;flex-wrap:wrap}
+.dcard .pr b{font-size:18px;font-weight:700}
+.dcard.cl .pr b{color:#D7261E}
+.dcard .pr s{color:var(--muted);font-size:13px}
+.dcard .nm{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.dcard .tm{display:flex!important;align-items:center;gap:8px;margin-top:6px;font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums}
+.dcard .bar{display:block;flex:1;height:4px;border-radius:4px;background:#E7E7E7;position:relative;overflow:hidden}
+.dcard .bar i{position:absolute;left:0;top:0;bottom:0;background:#111;border-radius:4px}
+@media (max-width:860px){.dhead h2{font-size:18px;white-space:nowrap}.dhead button{font-size:13px}.dhead .lk{display:none}.dhead .sk{display:inline}.deals{grid-template-columns:1fr;gap:22px}.drow,.deals.one .drow{grid-auto-columns:42%}}
+
+/* ---------- sale + full-image banners ---------- */
+.s5{background:radial-gradient(120% 140% at 50% 0%,#F0342A,#D10F12 55%,#9E0A0D)}
+.s5::before{content:"";position:absolute;inset:0;background:
+ radial-gradient(circle at 12% 22%,rgba(255,215,90,.9) 0 2px,transparent 3px),radial-gradient(circle at 22% 70%,rgba(255,255,255,.8) 0 2px,transparent 3px),
+ radial-gradient(circle at 78% 18%,rgba(255,215,90,.9) 0 2px,transparent 3px),radial-gradient(circle at 88% 62%,rgba(255,255,255,.8) 0 2px,transparent 3px),
+ radial-gradient(circle at 55% 85%,rgba(255,215,90,.8) 0 2px,transparent 3px),radial-gradient(circle at 40% 12%,rgba(255,255,255,.7) 0 1.5px,transparent 2.5px);pointer-events:none}
+.s5 .kick{color:#FFE27A}
+.s5 h1 span,.s5 h2 span{color:#FFE27A;text-shadow:0 3px 0 rgba(0,0,0,.18)}
+.s5 p{color:#FFE3E0}
+.slide.sfull{padding:0;display:block;border:0;cursor:pointer;background:#111}
+.slide.sfull img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* sub-categories with photos */
+#products{scroll-margin-top:96px}
+@media (max-width:860px){#products{scroll-margin-top:140px}}
+.subchips.pics{gap:14px;padding:4px 2px 14px}
+.subchips.pics button{display:flex;flex-direction:column;align-items:center;gap:4px;width:96px;border:0;background:none;border-radius:14px;padding:4px 2px;white-space:normal;text-align:center}
+.subchips.pics button .sp{width:78px;height:78px;border-radius:50%;overflow:hidden;background:#fff;border:2px solid var(--line);display:grid;place-items:center;transition:border-color .15s,box-shadow .15s}
+.subchips.pics button .sp img{width:100%;height:100%;object-fit:cover}
+.subchips.pics button .ph0 .circ{width:100%;height:100%;border:0;background:var(--mint);border-radius:50%;display:grid;place-items:center}
+.subchips.pics button .ph0 .circ img{width:70%;height:70%}
+.subchips.pics button .ph0 .circ svg{width:34px;height:34px}
+.subchips.pics button .ph0{display:block;width:100%;height:100%}
+.subchips.pics button b{font-size:12.5px;line-height:1.2;color:var(--ink);font-weight:600}
+.subchips.pics button em{margin:0;font-size:11px;color:var(--muted)}
+.subchips.pics button:hover .sp{border-color:var(--green-2)}
+.subchips.pics button.on{background:none;color:inherit}
+.subchips.pics button.on .sp{border-color:var(--gold);box-shadow:0 0 0 3px rgba(245,184,46,.3)}
+.subchips.pics button.on b{color:var(--green)}
+.subchips.pics button.none{opacity:1}
+.subchips.pics button.none em{color:var(--gold-2)}
+@media (max-width:860px){.subchips.pics button{width:80px}.subchips.pics button .sp{width:64px;height:64px}.subchips.pics button b{font-size:11.5px}}
+
+/* shop by occasion */
+.occ h2{margin:0;font-size:clamp(24px,3vw,34px)}
+.occ .squig{position:relative;display:inline-block}
+.occ .squig::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:8px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 8' preserveAspectRatio='none'%3E%3Cpath d='M0 5 Q 12 1 25 4 T 50 4 T 75 4 T 100 3' fill='none' stroke='%23F5B82E' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat;background-size:100% 100%}
+.occ-sub{color:var(--muted);font-size:14px;margin:12px 0 14px}
+.occ-row{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.occ-row::-webkit-scrollbar{display:none}
+.occ-row button{flex-shrink:0;border-radius:999px;padding:14px 26px;font-weight:700;font-size:15px;color:var(--ink);transition:transform .15s,box-shadow .15s}
+.occ-row button:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.08)}
+@media (max-width:860px){.occ-row button{padding:11px 18px;font-size:13.5px}}
+/* language button + Urdu (right-to-left) */
+.lang-btn{display:flex;align-items:center;gap:6px;height:44px;padding:0 14px;border-radius:999px;border:1.5px solid var(--line);background:#fff;color:var(--green);font-weight:700;font-size:14px;flex-shrink:0}
+.lang-btn svg{width:18px;height:18px}
+.lang-btn span{font-family:"Noto Naskh Arabic",Poppins,sans-serif}
+html[dir=rtl] .lang-btn span{font-family:Poppins,sans-serif}
+html[dir=rtl] body{font-family:"Noto Naskh Arabic",Poppins,system-ui,sans-serif}
+html[dir=rtl] *{letter-spacing:0!important}
+html[dir=rtl] input,html[dir=rtl] textarea,html[dir=rtl] select,html[dir=rtl] button{font-family:inherit}
+html[dir=rtl] .brand,html[dir=rtl] .price,html[dir=rtl] .pr,html[dir=rtl] [data-end]{font-family:Poppins,sans-serif}
+html[dir=rtl] .slide h1,html[dir=rtl] .slide h2{line-height:1.35}
+html[dir=rtl] .card .nm,html[dir=rtl] .minfo h2,html[dir=rtl] .minfo h1,html[dir=rtl] .minfo .desc,html[dir=rtl] .dcard .nm,html[dir=rtl] .rel span,html[dir=rtl] .cart-item .n,html[dir=rtl] .pc .n{unicode-bidi:plaintext}
+@media (max-width:860px){.lang-btn{height:36px;padding:0 9px;font-size:12px;gap:0}.lang-btn svg{display:none}.lang-btn .lg{display:none}}
+.lang-btn .sm{display:none}
+@media (max-width:860px){.lang-btn .sm{display:inline}}
+
+/* promo picture cards */
+.promo{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.promo.nobig{grid-template-columns:1fr}
+.pright{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:minmax(150px,1fr);gap:16px}
+.pcard{position:relative;overflow:hidden;border-radius:22px;text-align:left;color:var(--ink);min-height:150px;isolation:isolate;transition:transform .2s,box-shadow .2s}
+.pcard:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(10,77,54,.13)}
+.pcard>img{position:absolute;right:0;top:0;height:100%;width:58%;object-fit:cover;z-index:-1;-webkit-mask-image:linear-gradient(90deg,transparent,#000 38%);mask-image:linear-gradient(90deg,transparent,#000 38%);transition:transform .35s}
+.pcard:hover>img{transform:scale(1.05)}
+.ptx{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:20px 22px;max-width:62%;height:100%;justify-content:center}
+.pt{font-size:19px;font-weight:700;line-height:1.2}
+.pt span{color:var(--green-2)}
+.pd{font-size:13.5px;color:var(--muted)}
+.pgo{font-size:13.5px;font-weight:700;color:var(--green)}
+.pgo i{font-style:normal;transition:margin .2s}
+.pcard:hover .pgo i{margin-left:4px}
+.pwide{grid-column:span 2}
+.pwide .pt{font-size:22px}
+.pwide>img{width:52%}
+.pbig{min-height:440px;color:#fff}
+.pbig>img{width:100%;-webkit-mask-image:none;mask-image:none}
+.pbig::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(5,48,31,.72),rgba(5,48,31,.15) 70%,transparent),linear-gradient(0deg,rgba(5,48,31,.55),transparent 55%)}
+.pbig .ptx{justify-content:flex-end;max-width:70%;padding:30px}
+.pbig .pt{font-size:clamp(28px,3.4vw,42px);line-height:1.08;color:#fff}
+.pbig .pt span{display:block;color:#9BE15D}
+.pbig .pd{color:#E3EFE8;font-size:15px;max-width:330px;margin:6px 0 8px}
+.pbig .pgo{color:#fff;font-size:15px}
+.pbadge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);backdrop-filter:blur(4px);margin-bottom:8px}
+.psmall .pbadge,.pwide .pbadge{background:#fff;border-color:var(--line)}
+.pc-green:not(.pbig){background:linear-gradient(120deg,#DDF0E5,#F1F8F3)}
+.pc-pink{background:linear-gradient(120deg,#F9E1E8,#FCF1F4)}
+.pc-blue{background:linear-gradient(120deg,#DFE9F6,#F1F6FC)}
+.pc-cream{background:linear-gradient(120deg,#F7EBD3,#FCF6EA)}
+.pc-mint{background:linear-gradient(120deg,#D7EFEC,#EEF8F6)}
+.pc-lavender{background:linear-gradient(120deg,#E9E2F8,#F5F1FC)}
+.pc-navy{background:linear-gradient(120deg,#0E1F4D,#0F6E62);color:#fff}
+.pc-navy .pd{color:#D2E3F0}.pc-navy .pgo,.pc-navy .pt span{color:#9BE15D}
+@media (max-width:860px){.promo{grid-template-columns:1fr}.pbig{min-height:340px}.pbig .ptx{max-width:85%;padding:22px}.pright{grid-auto-rows:minmax(130px,auto);gap:12px}.psmall{min-height:170px}.psmall .ptx{max-width:100%;padding:14px;justify-content:flex-start}.psmall .pt{font-size:16px}.psmall>img{top:auto;bottom:0;height:64%;width:100%;-webkit-mask-image:linear-gradient(180deg,transparent,#000 40%);mask-image:linear-gradient(180deg,transparent,#000 40%)}.pwide .ptx{max-width:64%;padding:16px}.pwide .pt{font-size:17px}.pwide .pd{font-size:12.5px}.pwide>img{width:46%}}
+html[dir=rtl] .psmall>img{left:0;right:0}
+/* category landing */
+.cat-hero{display:flex;align-items:center;justify-content:space-between;gap:16px;border-radius:20px;padding:30px 34px;margin-bottom:18px;min-height:150px;overflow:hidden}
+.ch-k{font-size:11px;letter-spacing:2.5px;color:var(--muted);font-weight:600}
+.cat-hero h2{font-size:clamp(24px,3.2vw,38px);margin:6px 0;color:var(--green-3);line-height:1.15}
+.cat-hero p{color:var(--muted);font-size:14px;max-width:420px}
+.ch-pic img{width:130px;height:130px;object-fit:contain;filter:drop-shadow(0 8px 16px rgba(10,77,54,.18))}
+.ch-pic .hic svg{width:90px;height:90px;opacity:.75}
+.budget{margin:4px 0 14px;padding:14px 16px;border:1px solid var(--line);border-radius:16px;background:#fff}
+.budget b{display:block;font-size:15px;margin-bottom:10px}
+.bchips{display:flex;flex-wrap:wrap;gap:8px}
+.bchips button{border:1.5px solid var(--line);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600;background:var(--cream)}
+.bchips button:hover{border-color:var(--green-2)}
+.bchips button.on{background:var(--green);border-color:var(--green);color:#fff}
+.relcats{grid-column:1/-1;margin-top:10px;padding:16px;border:1px solid var(--line);border-radius:16px;background:#fff}
+.relcats b{display:block;margin-bottom:10px;font-size:13px;letter-spacing:1px;color:var(--green-2);text-transform:uppercase}
+.relcats div{display:flex;flex-wrap:wrap;gap:8px}
+.relcats button{border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:13px;background:var(--cream)}
+.relcats i{font-style:normal;color:var(--green-2)}
+@media (max-width:860px){.cat-hero{padding:20px;min-height:120px}.ch-pic img{width:84px;height:84px}}
+html[dir=rtl] .pcard{text-align:right}
+html[dir=rtl] .pcard>img{right:auto;left:0;-webkit-mask-image:linear-gradient(270deg,transparent,#000 38%);mask-image:linear-gradient(270deg,transparent,#000 38%)}
+html[dir=rtl] .pbig>img{-webkit-mask-image:none;mask-image:none}
+html[dir=rtl] .ptx{align-items:flex-start}
+
+/* your own photos replacing icons */
+.cat .circ.photo{overflow:hidden;padding:0;background:#fff}
+.cat .circ.photo img,.subchips.pics .circ.photo img{width:100%!important;height:100%!important;object-fit:cover;filter:none}
+.quick img.qi{width:22px;height:22px;object-fit:contain;flex-shrink:0}
+.quick img.qi.ph{object-fit:cover;border-radius:50%}
+.ch-pic img.ph{border-radius:50%;object-fit:cover;box-shadow:0 8px 20px rgba(0,0,0,.12)}
+.cat-hero{position:relative;isolation:isolate}
+.cat-hero.banner{min-height:200px}
+.cat-hero .ch-bg{position:absolute;right:0;top:0;height:100%;width:62%;object-fit:cover;z-index:-1;-webkit-mask-image:linear-gradient(90deg,transparent,#000 40%);mask-image:linear-gradient(90deg,transparent,#000 40%)}
+.cat-hero.banner .ch-pic{display:none}
+html[dir=rtl] .cat-hero .ch-bg{right:auto;left:0;-webkit-mask-image:linear-gradient(270deg,transparent,#000 40%);mask-image:linear-gradient(270deg,transparent,#000 40%)}
+.tile .ico img{width:100%;height:100%;object-fit:contain}
+.tile.tl-gold{background:linear-gradient(135deg,#FFF6DE,#FBE3A6);color:#5B4310}
+.tile.tl-green{background:linear-gradient(135deg,#E6F3EB,#C9E6D4);color:var(--green-3)}
+.tile.tl-pink{background:linear-gradient(135deg,#FCEAF0,#F5CCDA)}.tile.tl-blue{background:linear-gradient(135deg,#E9F1FB,#CCDDF3)}
+.tile.tl-cream{background:linear-gradient(135deg,#FCF6EA,#F2E2C2)}.tile.tl-mint{background:linear-gradient(135deg,#E8F6F4,#C8E9E4)}
+.tile.tl-lavender{background:linear-gradient(135deg,#F3EFFC,#DCD1F4)}.tile.tl-navy{background:linear-gradient(135deg,#0E1F4D,#0F6E62);color:#fff}
+.tile.img{color:#fff;isolation:isolate}
+.tile .tbg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transition:transform .35s}
+.tile.img::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(0,0,0,.6),rgba(0,0,0,.05) 65%)}
+.tile.img:hover .tbg{transform:scale(1.05)}
 </style>
 </head>
 <body>
@@ -435,6 +634,7 @@ footer ul{list-style:none;display:grid;gap:8px}
     <input id="q" type="search" placeholder="What are you looking for? (jacket, chopper, suit...)" aria-label="Search">
     <button type="submit">Search</button>
   </form>
+  <button class="lang-btn" id="langBtn" onclick="toggleLang()" aria-label="Change language"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19M12 2.5c2.8 3 2.8 16 0 19M12 2.5c-2.8 3-2.8 16 0 19"/></svg><span id="langLbl">اردو</span></button>
   <button class="icon-btn" onclick="showWish()" aria-label="Wishlist"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3.1 4.5 6.9 4.5c2.1 0 3.6 1.1 5.1 2.9 1.5-1.8 3-2.9 5.1-2.9 3.8 0 6 3.9 4.5 7.3C19.5 16.4 12 21 12 21z"/></svg><span class="count wishCount">0</span></button>
   <button class="cart-btn" onclick="openCart()" aria-label="Cart">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
@@ -453,11 +653,13 @@ footer ul{list-style:none;display:grid;gap:8px}
 
   <nav class="quick" id="quick" aria-label="Quick categories"></nav>
 
-  <section class="trust">
-    <div><span class="ic" data-ico="cash"></span><span><b>Cash on Delivery</b><small>Pay when you receive</small></span></div>
-    <div><span class="ic" data-ico="truck"></span><span><b>All Pakistan</b><small id="trustFree">Delivery to every city</small></span></div>
-    <div><span class="ic" data-ico="clock"></span><span><b>3-5 Days</b><small>Doorstep delivery</small></span></div>
-    <div><span class="ic" data-ico="return"></span><span><b>7-Day Return</b><small>For wrong or damaged items</small></span></div>
+  <section class="whybar" aria-label="Why choose Umar Deals">
+    <a class="wtop" href="#faqPanel">
+      <span class="wt"><span data-ico="shield"></span>Why choose Umar Deals?</span>
+      <span class="wl"><span><span data-ico="cash"></span>Cash on Delivery</span><i></i><span><span data-ico="truck"></span><b id="trustFree">Delivery all over Pakistan</b></span><i></i><span><span data-ico="clock"></span>3-5 days delivery</span><i></i><span><span data-ico="return"></span>7-day return</span></span>
+      <span class="wgo">›</span>
+    </a>
+    <div class="wbot"><span data-ico="bell"></span><span>Security reminder: we confirm orders <b>only</b> from our official WhatsApp <b>0317-1897804</b>. We never ask for advance payment by SMS or phone call.</span></div>
   </section>
 
   <section class="panel" id="catPanel">
@@ -473,11 +675,14 @@ footer ul{list-style:none;display:grid;gap:8px}
   <div id="sections"></div>
 
   <section class="panel" id="products">
+    <div class="cat-hero hide" id="catHero"></div>
     <div class="bar">
       <h2 id="gridTitle">All products</h2>
     </div>
     <div class="subchips hide" id="subchips"></div>
+    <div class="budget hide" id="budget"></div>
     <div class="fbar" id="fbar">
+      <select id="fCat" class="hide" onchange="render()" aria-label="Category"><option value="">📂 All categories</option></select>
       <select id="fPrice" onchange="onPrice()" aria-label="Price range">
         <option value="">💰 Any price</option>
         <option value="0-1000">Up to Rs. 1,000</option>
@@ -595,6 +800,62 @@ footer ul{list-style:none;display:grid;gap:8px}
 <div class="toast" id="toast"></div>
 
 <script>
+/* ================= LANGUAGE: English / Urdu =================
+   Urdu translations of all fixed website text. Product names and descriptions come from the
+   sheet; optional columns name_ur and description_ur give their Urdu versions. */
+let LANG = (() => { try { return localStorage.getItem("ud_lang") === "ur" ? "ur" : "en"; } catch (e) { return "en"; } })();
+const UR = {"What are you looking for? (jacket, chopper, suit...)":"آپ کیا ڈھونڈ رہے ہیں؟ (جیکٹ، چوپر، سوٹ...)","Search":"تلاش","Cart":"کارٹ","Wishlist":"پسندیدہ","Menu":"مینو","Close":"بند کریں","Next":"اگلا","Previous":"پچھلا","Home":"ہوم","Categories":"کیٹیگریز","WhatsApp":"واٹس ایپ","Instagram":"انسٹاگرام","Facebook":"فیس بک","TikTok":"ٹک ٹاک","Quick categories":"فوری کیٹیگریز","Why choose Umar Deals":"عمر ڈیلز کیوں؟","🚚 Orders of":"🚚","or more, 2+ items =":"یا زیادہ، 2+ آئٹمز =","FREE delivery":"فری ڈیلیوری","FREE delivery!":"فری ڈیلیوری!","FREE Delivery":"فری ڈیلیوری","Rs. 5,000+ and 2+ items = FREE delivery":"5,000 روپے+ اور 2+ آئٹمز = فری ڈیلیوری","Under":"کم قیمت","Special":"اسپیشل","Great value picks":"بہترین قیمت والی چیزیں","Hoodies, fleece, caps":"ہوڈیز، فلیس، ٹوپیاں","Shop now →":"ابھی خریدیں ←","Shop the sale →":"سیل دیکھیں ←","Shop winter →":"سردیوں کی شاپنگ ←","View designs →":"ڈیزائن دیکھیں ←","Shop kitchenware →":"کچن کا سامان دیکھیں ←","Start shopping →":"شاپنگ شروع کریں ←","WINTER SPECIAL":"سردیوں کی خاص پیشکش","Get ready for":"تیار ہو جائیں","winter":"سردیوں کے لیے","Warm hoodies, fleece trousers, caps and jackets. With Cash on Delivery.":"گرم ہوڈیز، فلیس ٹراؤزر، ٹوپیاں اور جیکٹس۔ کیش آن ڈیلیوری کے ساتھ۔","NEW DESIGNS":"نئے ڈیزائن","Women's":"خواتین کے","Winter Suits":"سرمائی سوٹ","2-piece stitched printed cotton suits. 5 beautiful designs, only Rs. 1,780.":"2 پیس سلے ہوئے پرنٹڈ کاٹن سوٹ۔ 5 خوبصورت ڈیزائن، صرف 1,780 روپے۔","KITCHEN GADGETS":"کچن گیجٹس","Kitchen work,":"کچن کا کام،","made easy!":"اب آسان!","Choppers, cutters, spoon scales and bowl sets. Starting from Rs. 854.":"چوپر، کٹر، چمچ اسکیل اور باؤل سیٹ۔ صرف 854 روپے سے شروع۔","OFFER":"آفر","On orders of Rs. 5,000+":"5,000 روپے+ کے آرڈر پر","Buy any 2 or more items worth Rs. 5,000 or more and get completely free delivery, anywhere in Pakistan.":"کوئی بھی 2 یا زیادہ آئٹمز 5,000 روپے یا زیادہ کے خریدیں اور پورے پاکستان میں بالکل فری ڈیلیوری پائیں۔","11.11 SALE":"11.11 سیل","Up to":"تک","30% OFF":"30% رعایت","Big savings on winter wear, kitchen gadgets and more. Cash on Delivery all over Pakistan.":"سرمائی کپڑوں، کچن گیجٹس اور بہت کچھ پر بڑی بچت۔ پورے پاکستان میں کیش آن ڈیلیوری۔","Women":"خواتین","Men":"مرد","Kids":"بچے","Kitchen":"کچن","Wallets":"والٹس","All":"سب","All products":"تمام پروڈکٹس","Under Rs. 1,000":"1,000 روپے سے کم","💰 Under Rs. 1,000":"💰 1,000 روپے سے کم","Shop by category":"کیٹیگری کے مطابق خریدیں","View all →":"سب دیکھیں ←","✕ View all":"✕ سب دیکھیں","Coming soon":"جلد آ رہا ہے","Women Stitched":"خواتین (سلے ہوئے)","Men Stitched":"مرد (سلے ہوئے)","Kids Clothing":"بچوں کے کپڑے","Winter":"سردیاں","Kitchenware":"کچن کا سامان","Fashion Accessories":"فیشن ایکسیسریز","Cosmetics":"کاسمیٹکس","Perfumes":"پرفیومز","Jewellery":"جیولری","Women Unstitched":"خواتین (ان سلے)","Men Unstitched":"مرد (ان سلے)","Women Handbags":"خواتین کے ہینڈ بیگ","Festive Collection":"تہوار کلیکشن","Women's Shawls":"خواتین کی شالیں","Men's Shawls":"مردوں کی شالیں","Shoes":"جوتے","Bags":"بیگز","Kid Accessories":"بچوں کی ایکسیسریز","Home Essentials":"گھر کی ضروریات","Home Decor":"گھر کی سجاوٹ","Home Linen":"ہوم لینن","Bedding":"بستر","Mother & Baby":"ماں اور بچہ","Islamic Accessories":"اسلامی اشیاء","Car & Bike":"کار اور بائیک","Mobile & Gadgets":"موبائل اور گیجٹس","Electronic Accessories":"الیکٹرانک ایکسیسریز","Electronics":"الیکٹرانکس","Watches":"گھڑیاں","Fitness":"فٹنس","Books & Stationery":"کتابیں اور اسٹیشنری","Women Undergarments":"خواتین کے زیر جامہ","Men Undergarments":"مردوں کے زیر جامہ","Other":"دیگر","Why choose Umar Deals?":"عمر ڈیلز کیوں منتخب کریں؟","Cash on Delivery":"کیش آن ڈیلیوری","Delivery all over Pakistan":"پورے پاکستان میں ڈیلیوری","FREE delivery on orders of Rs. 5,000+ (2+ items)":"5,000 روپے+ (2+ آئٹمز) پر فری ڈیلیوری","3-5 days delivery":"3 سے 5 دن میں ڈیلیوری","7-day return":"7 دن میں واپسی","Security reminder: we confirm orders":"حفاظتی یاد دہانی: ہم آرڈر","only":"صرف","from our official WhatsApp":"اپنے آفیشل واٹس ایپ",". We never ask for advance payment by SMS or phone call.":"سے کنفرم کرتے ہیں۔ ہم کبھی SMS یا فون کال پر ایڈوانس پیمنٹ نہیں مانگتے۔","⚡ LIGHTNING DEALS":"⚡ فوری ڈیلز","🏷️ CLEARANCE DEALS":"🏷️ کلیئرنس ڈیلز","Limited-time offers":"محدود وقت کی آفرز","Limited stock":"محدود اسٹاک","See all":"سب دیکھیں","⚡ Lightning Deals":"⚡ فوری ڈیلز","🏷️ Clearance Deals":"🏷️ کلیئرنس ڈیلز","Shop by":"خریدیں","occasion":"موقع کے مطابق","Pick a vibe — we'll do the curating":"موقع چنیں — باقی ہم پر چھوڑ دیں","Eid edit":"عید کلیکشن","Wedding ready":"شادی کی تیاری","Office looks":"آفس لُک","Daily wear":"روزمرہ پہناوا","Glow-up":"نکھار","Gift mode":"تحفے","Shop by occasion":"موقع کے مطابق خریدیں","❄️ Winter Special":"❄️ سردیوں کی خاص پیشکش","Warm and stylish for the cold season":"سردی کے موسم کے لیے گرم اور اسٹائلش","⭐ Our Picks":"⭐ ہماری پسند","Hand-picked by Umar Deals":"عمر ڈیلز کی چنی ہوئی","Great value picks ":"بہترین قیمت","🆕 New Arrivals":"🆕 نئی آمد","Just added":"ابھی شامل کیے گئے","⭐ Top Pick":"⭐ ٹاپ پک","Sold Out":"ختم ہو گیا","👀 Recently viewed":"👀 حال ہی میں دیکھے گئے","Products you looked at":"جو پروڈکٹس آپ نے دیکھیں","❤️ Your wishlist":"❤️ آپ کی پسندیدہ","🛍️ You may also like":"🛍️ یہ بھی پسند آ سکتے ہیں","💰 Any price":"💰 کوئی بھی قیمت","Up to Rs. 1,000":"1,000 روپے تک","Rs. 1,000 - 2,000":"1,000 - 2,000 روپے","Rs. 2,000 - 3,000":"2,000 - 3,000 روپے","Rs. 3,000 - 5,000":"3,000 - 5,000 روپے","Above Rs. 5,000":"5,000 روپے سے زیادہ","Custom range...":"اپنی حد...","🎨 Any colour / design":"🎨 کوئی بھی رنگ / ڈیزائن","📏 Any size":"📏 کوئی بھی سائز","Newest first":"نئی پہلے","Price: low to high":"قیمت: کم سے زیادہ","Price: high to low":"قیمت: زیادہ سے کم","✕ Clear filters":"✕ فلٹر ہٹائیں","Clear filters":"فلٹر ہٹائیں","Clear":"صاف","Min Rs.":"کم از کم روپے","Max Rs.":"زیادہ سے زیادہ روپے","Price range":"قیمت کی حد","Colour or design":"رنگ یا ڈیزائن","Size":"سائز","Sort":"ترتیب","Add to cart":"کارٹ میں ڈالیں","🛒 Add to cart":"🛒 کارٹ میں ڈالیں","Add to wishlist":"پسندیدہ میں ڈالیں","Ask on WhatsApp":"واٹس ایپ پر پوچھیں","Choose colour / design":"رنگ / ڈیزائن چنیں","Choose size":"سائز چنیں","Quantity":"تعداد","📏 Size guide":"📏 سائز گائیڈ","Photo download":"تصویر ڈاؤن لوڈ","Photo":"تصویر","📤 Share on WhatsApp":"📤 واٹس ایپ پر شیئر کریں","· 💵 Cash on Delivery":"· 💵 کیش آن ڈیلیوری","💵 Cash on Delivery":"💵 کیش آن ڈیلیوری","⏱️ Delivery in 3-5 days":"⏱️ 3 سے 5 دن میں ڈیلیوری","⏱️ Delivery in":"⏱️ ڈیلیوری","3-5 days":"3 سے 5 دن","🚚 Delivery Rs. 99 (may vary by city/area)":"🚚 ڈیلیوری 99 روپے (شہر/علاقے کے حساب سے تھوڑا فرق ہو سکتا ہے)","🚚 Delivery Rs. 99 (may vary slightly by city/area) ·":"🚚 ڈیلیوری 99 روپے (شہر/علاقے کے حساب سے تھوڑا فرق ہو سکتا ہے) ·","🔄 Wrong or damaged item?":"🔄 غلط یا خراب آئٹم؟","7-day":"7 دن","return":"میں واپسی","🎉 FREE delivery on orders of Rs. 5,000+ (2+ items)":"🎉 5,000 روپے+ (2+ آئٹمز) پر فری ڈیلیوری","Free Size":"فری سائز","Black":"کالا","Blue":"نیلا","Brown":"براؤن","Dark Brown":"گہرا براؤن","Green":"سبز","Navy":"نیوی","Tan":"ٹین","White Floral":"سفید پھول دار","Blue Floral":"نیلا پھول دار","Blue Print":"نیلا پرنٹ","Pink Rose":"گلابی","Grey":"سرمئی","Maroon":"میرون","Olive":"زیتونی","White":"سفید","Pink":"گلابی","Decrease":"کم کریں","Increase":"زیادہ کریں","Your Cart 🛒":"آپ کی کارٹ 🛒","Remove":"ہٹائیں","Delivery":"ڈیلیوری","Total (COD)":"کل رقم (کیش آن ڈیلیوری)","FREE":"فری","FREE 🎉":"فری 🎉","Delivery charges may vary slightly by city/area. We will tell you before confirming your order.":"ڈیلیوری چارجز شہر/علاقے کے حساب سے تھوڑے مختلف ہو سکتے ہیں۔ آرڈر کنفرم کرنے سے پہلے ہم آپ کو بتا دیں گے۔","Full name":"پورا نام","Mobile number (03XX XXXXXXX)":"موبائل نمبر (03XX XXXXXXX)","City":"شہر","Full address (house no, street, area, landmark)":"مکمل پتہ (مکان نمبر، گلی، علاقہ، نشانی)","Confirm order":"آرڈر کنفرم کریں","Confirm on WhatsApp":"واٹس ایپ پر کنفرم کریں","Order ID":"آرڈر نمبر","Send":"بھیجیں","← Back, edit details":"→ واپس، تفصیل بدلیں","Please enter your name, city and full address.":"براہ کرم اپنا نام، شہر اور مکمل پتہ لکھیں۔","Please enter a valid mobile number, e.g. 03001234567.":"براہ کرم درست موبائل نمبر لکھیں، جیسے 03001234567۔","Download order summary":"آرڈر کا خلاصہ ڈاؤن لوڈ کریں","Continue shopping":"شاپنگ جاری رکھیں","Thank you!":"شکریہ!","Please send the WhatsApp message to confirm your order.":"آرڈر کنفرم کرنے کے لیے واٹس ایپ میسج بھیج دیں۔","✅ Your order is ready! Tap the button below. WhatsApp will open with your order message already written, just tap":"✅ آپ کا آرڈر تیار ہے! نیچے بٹن دبائیں۔ واٹس ایپ آپ کے آرڈر کے میسج کے ساتھ کھلے گا، بس دبائیں","Your cart is empty.":"آپ کی کارٹ خالی ہے۔","How to order":"آرڈر کیسے کریں","Choose a product":"پروڈکٹ چنیں","Select size, colour and quantity":"سائز، رنگ اور تعداد چنیں","Add as many products as you like":"جتنی چاہیں پروڈکٹس ڈالیں","Enter your address":"اپنا پتہ لکھیں","Name, phone, city and address":"نام، فون، شہر اور پتہ","Pay when the parcel arrives":"پارسل ملنے پر ادائیگی کریں","Our customers":"ہمارے کسٹمرز","Photos shared by real customers":"اصل کسٹمرز کی شیئر کی گئی تصاویر","🎬 Our Videos":"🎬 ہماری ویڈیوز","See the products in action":"پروڈکٹس کو استعمال ہوتے دیکھیں","Frequently asked questions":"اکثر پوچھے جانے والے سوالات","Do you offer Cash on Delivery?":"کیا کیش آن ڈیلیوری ہے؟","Yes. You pay the rider when you receive your parcel. Nothing to pay in advance.":"جی ہاں۔ پارسل ملنے پر رائیڈر کو ادائیگی کریں۔ پہلے سے کچھ نہیں دینا۔","How long does delivery take?":"ڈیلیوری میں کتنا وقت لگتا ہے؟","Usually 3 to 5 working days, anywhere in Pakistan.":"عام طور پر 3 سے 5 کام کے دن، پاکستان میں کہیں بھی۔","What are the delivery charges?":"ڈیلیوری چارجز کتنے ہیں؟","Rs. 99 per product (may vary slightly by city/area). Orders of Rs. 5,000 or more with at least 2 items get FREE delivery.":"ہر پروڈکٹ پر 99 روپے (شہر/علاقے کے حساب سے تھوڑا فرق ہو سکتا ہے)۔ کم از کم 2 آئٹمز والے 5,000 روپے یا زیادہ کے آرڈر پر فری ڈیلیوری۔","How is my order confirmed?":"میرا آرڈر کیسے کنفرم ہوتا ہے؟","After you order on the website, the order is sent to us on WhatsApp. We confirm the details with you, then ship your parcel.":"ویب سائٹ پر آرڈر کرنے کے بعد آرڈر ہمیں واٹس ایپ پر آتا ہے۔ ہم آپ سے تفصیل کنفرم کرتے ہیں، پھر پارسل بھیجتے ہیں۔","How do returns work?":"واپسی کیسے ہوتی ہے؟","If you receive a wrong, different or incomplete item, tell us on WhatsApp within 7 days with a photo/video.":"اگر غلط، مختلف یا نامکمل آئٹم ملے تو 7 دن کے اندر تصویر/ویڈیو کے ساتھ واٹس ایپ پر بتائیں۔","What if the size is wrong?":"اگر سائز غلط ہو تو؟","Please check the size guide before ordering, or WhatsApp us your height and weight and we will suggest the right size.":"آرڈر سے پہلے سائز گائیڈ دیکھ لیں، یا اپنا قد اور وزن واٹس ایپ کریں، ہم صحیح سائز بتا دیں گے۔","Smart products for everyday life. Delivery and Cash on Delivery all over Pakistan.":"روزمرہ زندگی کے لیے بہترین پروڈکٹس۔ پورے پاکستان میں ڈیلیوری اور کیش آن ڈیلیوری۔","Delivery & Payment":"ڈیلیوری اور ادائیگی","Online, instant replies":"آن لائن، فوری جواب","About Us":"ہمارے بارے میں","Privacy Policy":"پرائیویسی پالیسی","Terms & Conditions":"شرائط و ضوابط","Return Policy":"واپسی کی پالیسی","Umar Deals Pakistan. All rights reserved.":"عمر ڈیلز پاکستان۔ جملہ حقوق محفوظ ہیں۔","Received a wrong, different or incomplete item? WhatsApp us within 7 days":"غلط، مختلف یا نامکمل آئٹم ملا؟ 7 دن کے اندر واٹس ایپ کریں","Record a video while opening the parcel":"پارسل کھولتے وقت ویڈیو بنائیں","📲 WhatsApp:":"📲 واٹس ایپ:","all over Pakistan":"پورے پاکستان میں","Umar Deals Assistant":"عمر ڈیلز اسسٹنٹ","Chat assistant":"چیٹ اسسٹنٹ","Hi there! 👋 Looking for something? Ask me!":"السلام علیکم! 👋 کچھ ڈھونڈ رہے ہیں؟ مجھ سے پوچھیں!","Hello! 👋 I am the":"السلام علیکم! 👋 میں",". Type a product name (e.g.":"ہوں۔ کسی پروڈکٹ کا نام لکھیں (جیسے","), or pick an option below:":")، یا نیچے کوئی آپشن چنیں:","jacket":"jacket","suit":"suit","chopper":"chopper","Type here... (e.g. winter jacket, suit price)":"یہاں لکھیں... (جیسے winter jacket, suit price)","❄️ Winter items":"❄️ سردیوں کی چیزیں","👗 Women suits":"👗 خواتین کے سوٹ","🧒 Kids clothes":"🧒 بچوں کے کپڑے","💰 Under Rs. 1000":"💰 1000 روپے سے کم","🚚 Delivery charges":"🚚 ڈیلیوری چارجز","💵 Cash on Delivery?":"💵 کیش آن ڈیلیوری؟","📂 Categories":"📂 کیٹیگریز","🛒 How to order?":"🛒 آرڈر کیسے کریں؟","📏 What sizes?":"📏 کون سے سائز؟","Talk to our team":"ہماری ٹیم سے بات کریں","Chat on WhatsApp":"واٹس ایپ پر بات کریں","Tell us on WhatsApp":"واٹس ایپ پر بتائیں","✅ Added to cart":"✅ کارٹ میں ڈال دیا","❤️ Added to wishlist":"❤️ پسندیدہ میں ڈال دیا","Removed from wishlist":"پسندیدہ سے ہٹا دیا","Your wishlist is empty. Tap ❤️ on a product.":"آپ کی پسندیدہ لسٹ خالی ہے۔ کسی پروڈکٹ پر ❤️ دبائیں۔","⏳ Creating your order summary...":"⏳ آرڈر کا خلاصہ بن رہا ہے...","Could not create the image":"تصویر نہیں بن سکی","✅ Order summary downloaded":"✅ آرڈر کا خلاصہ ڈاؤن لوڈ ہو گیا","Photo opened in a new tab — long-press or right-click to save it.":"تصویر نئے ٹیب میں کھل گئی — محفوظ کرنے کے لیے دبا کر رکھیں یا رائٹ کلک کریں۔","Kurtis":"کرتیاں","2 Pc Suits":"2 پیس سوٹ","3 Pc Suits":"3 پیس سوٹ","Co-ord Sets":"کو آرڈ سیٹ","Trousers & Shalwar":"ٹراؤزر اور شلوار","Western Tops":"ویسٹرن ٹاپس","Nightwear":"نائٹ ویئر","Women Winter Wear":"خواتین کے سرمائی کپڑے","Shalwar Kameez":"شلوار قمیض","Kurtas":"کرتے","T-Shirts & Polos":"ٹی شرٹس اور پولو","Shirts":"شرٹس","Trousers & Joggers":"ٹراؤزر اور جوگرز","Tracksuits":"ٹریک سوٹ","Hoodies & Jackets":"ہوڈیز اور جیکٹس","Boys Tracksuits":"لڑکوں کے ٹریک سوٹ","Boys Shalwar Kameez":"لڑکوں کے شلوار قمیض","Girls Frocks":"لڑکیوں کے فراک","Girls Suits":"لڑکیوں کے سوٹ","T-Shirts & Shorts":"ٹی شرٹس اور شارٹس","Kids Winter Wear":"بچوں کے سرمائی کپڑے","Baby Rompers":"بے بی رومپرز","Hoodies & Sweatshirts":"ہوڈیز اور سویٹ شرٹس","Jackets & Cardigans":"جیکٹس اور کارڈیگنز","Fleece Trousers":"فلیس ٹراؤزر","Caps, Gloves & Mufflers":"ٹوپیاں، دستانے اور مفلر","Socks & Thermals":"جرابیں اور تھرمل","Choppers & Cutters":"چوپر اور کٹر","Storage & Containers":"اسٹوریج اور ڈبے","Cookware":"برتن","Serving & Dinnerware":"سرونگ اور ڈنر سیٹ","Kitchen Tools & Gadgets":"کچن ٹولز اور گیجٹس","Oil & Spice Containers":"تیل اور مصالحہ دان","Belts":"بیلٹس","Sunglasses":"دھوپ کے چشمے","Caps & Beanies":"ٹوپیاں اور بینیز","Scarves & Stoles":"اسکارف اور اسٹول","Hair Accessories":"بالوں کی ایکسیسریز","Makeup":"میک اپ","Skin Care":"اسکن کیئر","Hair Care":"ہیئر کیئر","Nail Care":"نیل کیئر","Beauty Tools":"بیوٹی ٹولز","Men Perfumes":"مردانہ پرفیوم","Women Perfumes":"زنانہ پرفیوم","Attar":"عطر","Body Spray":"باڈی اسپرے","Gift Sets":"گفٹ سیٹ","Earrings":"بالیاں","Necklace Sets":"نیکلس سیٹ","Bangles & Bracelets":"چوڑیاں اور بریسلیٹ","Rings":"انگوٹھیاں","Anklets":"پائل","Lawn":"لان","Khaddar":"کھدر","Linen":"لینن","Karandi":"کرنڈی","Chiffon":"شیفون","Embroidered":"کڑھائی والے","Wash & Wear":"واش اینڈ ویئر","Cotton":"کاٹن","Boski":"بوسکی","Shoulder Bags":"شولڈر بیگ","Clutches":"کلچ","Tote Bags":"ٹوٹ بیگ","Crossbody Bags":"کراس باڈی بیگ","Purses":"پرس","Party Wear":"پارٹی ویئر","Eid Collection":"عید کلیکشن","Wedding Wear":"شادی کے کپڑے","Mehndi Accessories":"مہندی کا سامان","Embroidered Shawls":"کڑھائی والی شالیں","Pashmina":"پشمینہ","Wool Shawls":"اونی شالیں","Stoles & Dupattas":"اسٹول اور دوپٹے","Kashmiri Shawls":"کشمیری شالیں","Chaddar":"چادر","Men Shoes":"مردانہ جوتے","Women Shoes":"زنانہ جوتے","Kids Shoes":"بچوں کے جوتے","Sneakers":"سنیکرز","Chappal & Slippers":"چپل اور سلیپر","Khussa":"کھسہ","Backpacks":"بیک پیک","Travel Bags":"ٹریول بیگ","Laptop Bags":"لیپ ٹاپ بیگ","Gym Bags":"جم بیگ","School Bags":"اسکول بیگ","Toys":"کھلونے","Water Bottles & Lunch Boxes":"پانی کی بوتلیں اور لنچ باکس","Kids Watches":"بچوں کی گھڑیاں","Hair Clips":"ہیئر کلپس","Cleaning":"صفائی","Organizers":"آرگنائزر","Bathroom":"باتھ روم","Laundry":"لانڈری","Tools":"اوزار","Wall Decor":"دیوار کی سجاوٹ","Vases & Plants":"گلدان اور پودے","Lamps":"لیمپ","Cushions":"کشن","Clocks":"گھڑیال","Rugs":"قالین","Towels":"تولیے","Curtains":"پردے","Table Covers":"میز پوش","Cushion Covers":"کشن کور","Bed Sheets":"بیڈ شیٹس","Comforters & Razai":"کمفرٹر اور رضائی","Pillows":"تکیے","Blankets":"کمبل","Mattress Covers":"میٹرس کور","Feeding":"فیڈنگ","Diapering":"ڈائپرز","Baby Care":"بے بی کیئر","Baby Clothing":"بچوں کے کپڑے","Baby Toys":"بچوں کے کھلونے","Prayer Mats":"جائے نماز","Tasbeeh":"تسبیح","Quran Rehal":"قرآن رحل","Hijabs & Abayas":"حجاب اور عبایا","Prayer Caps":"نماز کی ٹوپیاں","Car Covers":"کار کور","Bike Covers":"بائیک کور","Car Accessories":"کار ایکسیسریز","Car Care":"کار کیئر","Car Lights":"کار لائٹس","Air Fresheners":"ایئر فریشنر","Mobile Covers":"موبائل کور","Chargers & Cables":"چارجر اور کیبل","Stands & Holders":"اسٹینڈ اور ہولڈر","Earbuds & Headphones":"ایئر بڈز اور ہیڈ فون","Power Banks":"پاور بینک","Smart Watches":"اسمارٹ واچز","Speakers":"اسپیکر","Kitchen Appliances":"کچن اپلائنسز","Personal Care":"پرسنل کیئر","Fans & Heaters":"پنکھے اور ہیٹر","Lights":"لائٹس","Men Watches":"مردانہ گھڑیاں","Women Watches":"زنانہ گھڑیاں","Gym Equipment":"جم کا سامان","Yoga":"یوگا","Sports Wear":"اسپورٹس ویئر","Massagers":"مساجر","Books":"کتابیں","Notebooks & Diaries":"نوٹ بک اور ڈائریاں","Pens & Art":"پین اور آرٹ","School Supplies":"اسکول کا سامان","Islamic Books":"اسلامی کتابیں","Bras":"برا","Panties":"پینٹیز","Camisoles":"کیمیسول","Shapewear":"شیپ ویئر","Vests":"بنیان","Briefs & Boxers":"بریف اور باکسر","Thermals":"تھرمل","Socks":"جرابیں","Gift Items":"تحفے","Miscellaneous":"متفرق","🎉 Congratulations! Your":"🎉 مبارک ہو! آپ کی","delivery is FREE":"ڈیلیوری فری ہے","Your cart is empty 🛒":"آپ کی کارٹ خالی ہے 🛒","Start shopping":"شاپنگ شروع کریں","Back to top":"اوپر جائیں","Share":"شیئر","Size chart":"سائز چارٹ","Ask about size":"سائز کے بارے میں پوچھیں","Ask order status":"آرڈر کا اسٹیٹس پوچھیں","WhatsApp for return":"واپسی کے لیے واٹس ایپ","More products":"مزید پروڈکٹس","📂 All categories":"📂 تمام کیٹیگریز","You may also like":"یہ بھی دیکھیں","Shop now":"ابھی خریدیں","Browse suits":"سوٹ دیکھیں","Editor's pick":"ہماری خاص پسند","Winter suits,":"سرمائی سوٹ،","made for you.":"آپ کے لیے۔","2-piece printed cotton suits in 5 designs. Cash on Delivery.":"2 پیس پرنٹڈ کاٹن سوٹ، 5 ڈیزائن۔ کیش آن ڈیلیوری۔","Free delivery on Rs. 5,000+":"5,000 روپے+ پر فری ڈیلیوری","Buy any 2 or more items worth Rs. 5,000 or more — delivered free across Pakistan.":"5,000 روپے یا زیادہ کے 2 یا زیادہ آئٹمز خریدیں — پورے پاکستان میں فری ڈیلیوری۔","Hand-picked by Umar Deals. Cash on Delivery all over Pakistan.":"عمر ڈیلز کی چنی ہوئی۔ پورے پاکستان میں کیش آن ڈیلیوری۔","Category":"کیٹیگری","Change language":"زبان بدلیں"};
+const UR_RULES = [
+  [/^(\d+) items?$/, "$1 آئٹمز"], [/^(\d+) products?$/, "$1 پروڈکٹس"], [/^Products \((\d+)\)$/, "پروڈکٹس ($1)"],
+  [/^Sizes: (.*)$/, "سائز: $1"], [/^ONLY (\d+) LEFT$/, "صرف $1 باقی"], [/^(\d+) designs$/, "$1 ڈیزائن"], [/^(\d+) photos$/, "$1 تصاویر"],
+  [/^Code: (.*)$/, "کوڈ: $1"], [/^Delivery \((\d+) products × (\d+)\)$/, "ڈیلیوری ($1 پروڈکٹس × $2)"], [/^(\d+)% OFF$/, "$1% رعایت"],
+  [/^Buy (.+) Online$/, (m, x) => urCat(x) + " آن لائن خریدیں"], [/^SHOP (.+)$/, (m, x) => urCat(x)],
+  [/^Shop (.+) by budget$/, (m, x) => "بجٹ کے مطابق " + urCat(x)], [/^Under Rs\. ([\d,]+)$/, "$1 روپے سے کم"],
+  [/^(.+) \((\d+)\)$/, (m, x, n) => UR[x] ? UR[x] + " (" + n + ")" : m],
+  [/^🚚 Add (.+) to get$/, (m, x) => "🚚 " + x.replace(/Rs\. ([\d,]+) more/, "مزید $1 روپے").replace(/(\d+) more items?/, "$1 مزید آئٹم").replace(" and ", " اور ") + " ڈالیں تو ملے گی"]
+];
+const UR_UP = {}; Object.keys(UR).forEach(k => UR_UP[k.toUpperCase()] = UR[k]);
+const urCat = x => UR[x] || UR_UP[x] || x;
+function trUR(str){
+  const k = String(str).replace(/\s+/g, " ").trim(); if (!k) return null;
+  let v = UR[k];
+  if (v === undefined) for (const [re, rp] of UR_RULES){ if (re.test(k)){ v = k.replace(re, rp); break; } }
+  if (v === undefined) return null;
+  const lead = str.match(/^\s*/)[0], trail = str.match(/\s*$/)[0];
+  return lead + v + trail;
+}
+const T = s => LANG === "ur" ? (trUR(s) ?? s) : s;
+const TR_ATTRS = ["placeholder", "aria-label", "title"];
+function trEl(el){ TR_ATTRS.forEach(a => { if (el.hasAttribute(a)){ const v = trUR(el.getAttribute(a)); if (v !== null && v !== el.getAttribute(a)) el.setAttribute(a, v); } }); }
+function translateNode(root){
+  if (LANG !== "ur" || !root) return;
+  if (root.nodeType === 3){ const p = root.parentElement; if (p && p.closest("script,style,.no-tr")) return; const v = trUR(root.nodeValue); if (v !== null && v !== root.nodeValue) root.nodeValue = v; return; }
+  if (root.nodeType !== 1 || root.closest("script,style,.no-tr")) return;
+  const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); let n; const nodes = [];
+  while ((n = w.nextNode())){ const p = n.parentElement; if (p && !p.closest("script,style,.no-tr")) nodes.push(n); }
+  nodes.forEach(t => { const v = trUR(t.nodeValue); if (v !== null && v !== t.nodeValue) t.nodeValue = v; });
+  trEl(root); root.querySelectorAll("[placeholder],[aria-label],[title]").forEach(trEl);
+}
+function applyLang(){
+  const ur = LANG === "ur";
+  document.documentElement.lang = ur ? "ur" : "en-PK";
+  document.documentElement.dir = ur ? "rtl" : "ltr";
+  const lbl = document.getElementById("langLbl"); if (lbl) lbl.innerHTML = ur ? '<span class="lg">English</span><span class="sm">EN</span>' : "اردو";
+  if (!ur) return;
+  if (!document.getElementById("urFont")){
+    const l = document.createElement("link"); l.id = "urFont"; l.rel = "stylesheet";
+    l.href = "https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap"; document.head.appendChild(l);
+  }
+  translateNode(document.body);
+  new MutationObserver(list => list.forEach(m => {
+    if (m.type === "characterData") translateNode(m.target);
+    else m.addedNodes.forEach(nd => translateNode(nd));
+  })).observe(document.body, {childList: true, subtree: true, characterData: true});
+}
+function toggleLang(){
+  try { localStorage.setItem("ud_lang", LANG === "ur" ? "en" : "ur"); } catch (e) {}
+  location.reload();
+}
 /* =========================================================
    SETTINGS: change things here only
    ========================================================= */
@@ -618,6 +879,9 @@ const CONFIG = {
 
   // BANNERS: Publish-to-web (CSV) link of the "Banners" sheet tab. Empty = use banners.csv
   BANNERS_CSV_URL: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTRMBCjZ8w62ZPpeh37D30cnicB9mjkQxp7_8XJwxFjuBozhKioA1ubDpJiIN2Ti9E6pR6HghAHrlY5/pub?gid=1&single=true&output=csv",
+  SUBS_CSV_URL: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTRMBCjZ8w62ZPpeh37D30cnicB9mjkQxp7_8XJwxFjuBozhKioA1ubDpJiIN2Ti9E6pR6HghAHrlY5/pub?gid=4&single=true&output=csv",   // Subcategories tab: photo for each sub-category
+  CARDS_CSV_URL: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTRMBCjZ8w62ZPpeh37D30cnicB9mjkQxp7_8XJwxFjuBozhKioA1ubDpJiIN2Ti9E6pR6HghAHrlY5/pub?gid=5&single=true&output=csv",   // Promo Cards tab: picture cards under "Shop by occasion"
+  CATS_CSV_URL: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTRMBCjZ8w62ZPpeh37D30cnicB9mjkQxp7_8XJwxFjuBozhKioA1ubDpJiIN2Ti9E6pR6HghAHrlY5/pub?gid=2&single=true&output=csv",   // Categories tab: your own photo / banner for each category
 
   // ORDER REGISTER: Apps Script Web app URL (see order-register.gs). Empty = off
   ORDER_SHEET_URL: "",
@@ -749,6 +1013,8 @@ const ICONS = {
   "Other": P(`<rect x="8" y="18" width="32" height="22" rx="2"/><path d="M6 12h36v6H6z" fill="${G}"/><path d="M24 12v28"/><path d="M24 12c-4-6-10-4-8 0M24 12c4-6 10-4 8 0"/>`),
   "default": P(`<path d="M10 16h28l-2 26H12z"/><path d="M18 16v-2a6 6 0 0 1 12 0v2"/><circle cx="24" cy="28" r="3" fill="${G}" stroke="none"/>`),
   "tag": P(`<path d="M6 24V8h16l20 20-16 16z"/><circle cx="14" cy="16" r="3" fill="${G}"/>`),
+  "shield": P(`<path d="M24 5l15 6v11c0 10-6.5 17-15 21-8.5-4-15-11-15-21V11z"/><path d="M17 24l5 5 9-10"/>`),
+  "bell": P(`<path d="M12 34V22a12 12 0 0124 0v12l3 4H9z"/><path d="M20 42a4 4 0 008 0"/>`),
   "cash": P(`<rect x="5" y="13" width="38" height="22" rx="4"/><circle cx="24" cy="24" r="5" fill="${G}"/>`),
   "truck": P(`<rect x="4" y="12" width="24" height="20" rx="2"/><path d="M28 18h8l7 8v6H28z"/><circle cx="13" cy="36" r="3.5" fill="${G}"/><circle cx="35" cy="36" r="3.5" fill="${G}"/>`),
   "clock": P(`<circle cx="24" cy="24" r="17"/><path d="M24 14v10l7 5" stroke="${G}"/>`),
@@ -821,32 +1087,34 @@ async function loadProducts(){
       .filter(p => p.name && (p.status || "active").toLowerCase() !== "hidden")
       .map((p, i) => ({
         code: p.code || ("P-" + (i + 1)),
-        name: p.name,
+        name: (LANG === "ur" && p.name_ur) ? p.name_ur : p.name,
         cats: list(p.category),
         subs: String(p.subcategory || "").split("|").map(x => x.trim()).filter(Boolean),
         price: num(p.price), old: num(p.old_price),
         sizes: list(p.sizes), colors: list(p.colors),
         images: String(p.images || p.image || "").split("|").map(s => s.trim()).filter(Boolean),
-        desc: p.description || "",
+        desc: (LANG === "ur" && p.description_ur) ? p.description_ur : (p.description || ""),
         tags: list(p.tags).map(t => t.toLowerCase()),
         chart: (p.size_chart || "").trim(),
         sold: (p.status || "").toLowerCase().replace(/\s/g, "") === "soldout",
+        deal: (p.deal || "").toLowerCase().trim(), ends: parseEnd(p.deal_ends), stock: (p.stock || "").trim() === "" ? null : num(p.stock),
         order: i
       }));
   } catch (e) {
     $("#grid").innerHTML = '<div class="empty">Products could not be loaded. Please check your internet and reload the page.</div>';
     return;
   }
-  await loadBanners();
+  await Promise.all([loadBanners(), loadSubPhotos(), loadCards(), loadCatInfo()]);
+  renderSide();
   renderSlides(); renderQuick(); renderCats(); renderPersonal(); renderSections(); renderVideos(); render(); openFromHash();
 }
 
 /* ---------- slider ---------- */
 let slideIx = 0, slideTimer, SLIDES = [], slidePaused = false;
-const THEMES = {green:"s1", maroon:"s2", blue:"s3", gold:"s4", s1:"s1", s2:"s2", s3:"s3", s4:"s4"};
+const THEMES = {green:"s1", maroon:"s2", blue:"s3", gold:"s4", red:"s5", sale:"s5", image:"sfull", s1:"s1", s2:"s2", s3:"s3", s4:"s4", s5:"s5"};
 async function loadBanners(){
   try {
-    const ok = r => r.title || r.highlight;
+    const ok = r => r.title || r.highlight || ((r.theme || "").toLowerCase() === "image" && r.image);
     let rows = parseCSV(await getCSV(CONFIG.BANNERS_CSV_URL, "banners.csv")).filter(ok);
     if (!rows.length && CONFIG.BANNERS_CSV_URL) rows = parseCSV(await getCSV("", "banners.csv")).filter(ok);
     if (rows.length) SLIDES = rows.map(r => ({theme: THEMES[(r.theme || "").toLowerCase()] || "s1", kick: r.kick, title: esc(r.title) + (r.highlight ? ` <span>${esc(r.highlight)}</span>` : ""),
@@ -865,6 +1133,7 @@ function renderSlides(){
     if (s.video) media = `<div class="pic vid"><video src="${esc(s.video)}" muted loop playsinline autoplay preload="metadata"${img ? ` poster="${esc(img)}"` : ""}></video>${p ? `<span class="tag">${rs(p.price)}</span>` : ""}</div>`;
     else if (img) media = `<button class="pic" onclick="${p ? `openProduct('${jsq(p.code)}')` : go}" aria-label="${esc(p ? p.name : s.btn)}"><img src="${esc(img)}" alt="">${p ? `<span class="tag">${rs(p.price)}</span>` : ""}</button>`;
     else media = `<div class="bigicon">${icon("truck")}</div>`;
+    if (s.theme === "sfull" && img) return `<button class="slide sfull ${i === 0 ? "on" : ""}" onclick="${p ? `openProduct('${jsq(p.code)}')` : go}" aria-label="${esc(s.kick || s.btn || "Offer")}"><img src="${esc(img)}" alt="${esc(s.kick || "Offer")}"></button>`;
     return `<div class="slide ${s.theme} ${i === 0 ? "on" : ""}">
       <div style="position:relative;z-index:1">
         <div class="kick">${esc(s.kick || "")}</div><${H}>${s.title}</${H}><p>${esc(s.text || "")}</p>
@@ -892,6 +1161,22 @@ function goSlide(i, user){
 }
 
 /* ---------- categories ---------- */
+/* category pictures (images/cat/<name>.webp); a category without a picture keeps its line icon */
+const CAT_PICS = new Set(["all", "shoes", "bags", "bedding", "books-stationery", "car-bike", "cosmetics", "electronic-accessories", "electronics", "fashion-accessories", "festive-collection", "fitness", "home-decor", "home-essentials", "home-linen", "islamic-accessories", "jewellery", "kid-accessories", "kids-clothing", "kitchenware", "men-s-shawls", "men-stitched", "men-undergarments", "men-unstitched", "mobile-gadgets", "mother-baby", "other", "perfumes", "watches", "winter", "women-handbags", "women-s-shawls", "women-undergarments", "women-unstitched"]);
+const catSlug = k => String(k).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+let CAT_PHOTO = {}, CAT_BANNER = {};
+async function loadCatInfo(){
+  try {
+    parseCSV(await getCSV(CONFIG.CATS_CSV_URL, "categories.csv")).forEach(r => {
+      const c = (r.category || "").trim(); if (!c) return;
+      if ((r["photo link"] || "").trim()) CAT_PHOTO[c] = r["photo link"].trim();
+      if ((r["banner photo"] || "").trim()) CAT_BANNER[c] = r["banner photo"].trim();
+    });
+  } catch (e) {}
+}
+/* picture for a category: your sheet photo first, then the designed icon, then the line icon */
+const catImgSrc = k => CAT_PHOTO[k] ? imgUrl(CAT_PHOTO[k]) : CAT_PICS.has(catSlug(k)) ? `images/cat/${catSlug(k)}.webp` : "";
+const catIco = k => CAT_PHOTO[k] ? `<span class="circ pic photo"><img src="${esc(imgUrl(CAT_PHOTO[k]))}" alt="" loading="lazy"></span>` : CAT_PICS.has(catSlug(k)) ? `<span class="circ pic"><img src="images/cat/${catSlug(k)}.webp" alt="" loading="lazy" width="160" height="160"></span>` : `<span class="circ">${icon(k)}</span>`;
 function renderCats(){
   const counts = {};
   PRODUCTS.forEach(p => p.cats.forEach(c => counts[c] = (counts[c] || 0) + 1));
@@ -899,19 +1184,125 @@ function renderCats(){
   const all = [["all","All",PRODUCTS.length], ...[...CATEGORIES, ...extra].map(n => [n, n, counts[n] || 0])];
   $("#cats").innerHTML = all.map(([k, label, n]) =>
     `<button class="cat ${current === k && !section ? "on" : ""} ${n ? "" : "soon"}" onclick="setCat('${jsq(k)}',true)">
-      <span class="circ">${icon(k)}</span><span>${esc(label)}</span><em>${n ? n + " items" : "Coming soon"}</em></button>`).join("");
+      ${catIco(k)}<span>${esc(label)}</span><em>${n ? n + (n === 1 ? " item" : " items") : "Coming soon"}</em></button>`).join("");
 }
 function scrollRow(sel, d){ const el = $(sel); el.scrollBy({left: d * el.clientWidth * 0.8, behavior: "smooth"}); }
 
 /* ---------- home sections ---------- */
+/* shop by occasion: put the tag (eid, wedding, office, daily, glow, gift) in the product's "tags" column */
+const OCCASIONS = [
+  {id:"eid", label:"Eid edit", bg:"#FFE4EC"},
+  {id:"wedding", label:"Wedding ready", bg:"#FFF1CC"},
+  {id:"office", label:"Office looks", bg:"#E7E5FF"},
+  {id:"daily", label:"Daily wear", bg:"#DCF4E8"},
+  {id:"glow", label:"Glow-up", bg:"#F3E5FF"},
+  {id:"gift", label:"Gift mode", bg:"#E1EDFF"}
+];
+/* promo picture cards (sheet tab "Promo Cards"): slot big / small / wide */
+let CARDS = [];
+async function loadCards(){
+  try {
+    CARDS = parseCSV(await getCSV(CONFIG.CARDS_CSV_URL, "cards.csv")).filter(r => r.title || r.image)
+      .map(r => ({slot: (r.slot || "small").toLowerCase().trim(), title: r.title, hl: r.highlight, text: r.text, badge: r.badge, btn: r.button || "Shop now",
+        color: (r.color || "cream").toLowerCase().trim(), image: r.image, type: (r.link_type || "all").toLowerCase().trim(), val: (r.link_value || "").trim()}));
+  } catch (e) { CARDS = []; }
+}
+function renderSide(){
+  const tiles = CARDS.filter(c => c.slot === "tile").slice(0, 2), side = $(".hero .side");
+  if (!tiles.length || !side) return;
+  side.innerHTML = tiles.map((c, n) => { const i = CARDS.indexOf(c);
+    const ico = c.image ? "" : `<span class="ico">${c.type === "category" && catImgSrc(c.val) ? `<img src="${esc(catImgSrc(c.val))}" alt="">` : icon(c.type === "category" ? c.val : "tag")}</span>`;
+    return `<button class="tile tl-${esc(c.color)} ${c.image ? "img" : ""}" onclick="cardGo(${i})" aria-label="${esc(c.title + " " + (c.hl || ""))}">
+      ${c.image ? `<img class="tbg" src="${esc(imgUrl(c.image))}" alt="">` : ""}${ico}
+      <b>${esc(c.title || "")}${c.hl ? `<br>${esc(c.hl)}` : ""}</b>${c.text ? `<small>${esc(c.text)}</small>` : ""}</button>`; }).join("");
+}
+function cardGo(i){
+  const c = CARDS[i]; if (!c) return;
+  if (c.type === "category") setCat(c.val, true);
+  else if (c.type === "subcategory"){ const [cat, sb] = c.val.split("|").map(x => x.trim()); setCat(cat, true); if (sb){ fSub = sb; render(); } }
+  else if (c.type === "occasion") showSection("occ-" + c.val.toLowerCase());
+  else if (c.type === "product") openProduct(c.val);
+  else if (c.type === "section") showSection(c.val.toLowerCase());
+  else setCat("all", true);
+}
+function renderPromo(){
+  if (!CARDS.length) return "";
+  const one = (c, cls) => { const i = CARDS.indexOf(c);
+    return `<button class="pcard ${cls} pc-${esc(c.color)}" onclick="cardGo(${i})" aria-label="${esc(c.title)}">
+      ${c.image ? `<img src="${esc(imgUrl(c.image))}" alt="" loading="lazy">` : ""}
+      <span class="ptx">${c.badge ? `<span class="pbadge">✦ ${esc(c.badge)}</span>` : ""}
+        <b class="pt">${esc(c.title || "")}${c.hl ? ` <span>${esc(c.hl)}</span>` : ""}</b>
+        ${c.text ? `<span class="pd">${esc(c.text)}</span>` : ""}
+        <span class="pgo">${esc(c.btn)} <i>→</i></span></span></button>`; };
+  const big = CARDS.filter(c => c.slot === "big").slice(0, 1), small = CARDS.filter(c => c.slot === "small").slice(0, 4), wide = CARDS.filter(c => c.slot === "wide").slice(0, 1);
+  return `<section class="promo ${big.length ? "" : "nobig"}" id="promoPanel">
+    ${big.map(c => one(c, "pbig")).join("")}
+    <div class="pright">${small.map(c => one(c, "psmall")).join("")}${wide.map(c => one(c, "pwide")).join("")}</div>
+  </section>`;
+}
+function renderOccasions(){
+  const list = OCCASIONS.filter(o => PRODUCTS.some(p => !p.sold && p.tags.includes(o.id)));
+  if (!list.length) return "";
+  return `<section class="panel occ" id="occPanel"><h2>Shop by <span class="squig">occasion</span></h2><p class="occ-sub">Pick a vibe — we'll do the curating</p>
+    <div class="occ-row">${list.map(o => `<button style="background:${o.bg}" onclick="showSection('occ-${o.id}')">${esc(o.label)}</button>`).join("")}</div></section>`;
+}
+/* deals: "deal" column = lightning (needs a real end date in deal_ends) or clearance */
+const isLight = p => p.deal === "lightning" && p.ends && p.ends > Date.now();
+const isClear = p => p.deal === "clearance";
+function parseEnd(v){
+  v = String(v || "").trim(); if (!v) return 0;
+  let m = v.match(/^(\d{4})-(\d{1,2})-(\d{1,2})(?:[ T](\d{1,2}):(\d{2}))?/);
+  if (!m){ const d = v.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})(?:\s+(\d{1,2}):(\d{2}))?/); if (d) m = [0, d[3], d[2], d[1], d[4], d[5]]; }
+  if (!m) return 0;
+  const hasT = m[4] !== undefined;
+  return new Date(+m[1], +m[2] - 1, +m[3], hasT ? +m[4] : 23, hasT ? +m[5] : 59, hasT ? 0 : 59).getTime() || 0;
+}
 const SECTIONS = [
   {id:"winter", title:"❄️ Winter Special", sub:"Warm and stylish for the cold season", f: p => p.cats.includes("Winter")},
   {id:"top", title:"⭐ Our Picks", sub:"Hand-picked by Umar Deals", f: p => p.tags.includes("top") || p.tags.includes("best")},
   {id:"under", title:"💰 Under Rs. 1,000", sub:"Great value picks", f: p => p.price > 0 && p.price < 1000},
-  {id:"new", title:"🆕 New Arrivals", sub:"Just added", f: () => true, newest: true}
+  {id:"new", title:"🆕 New Arrivals", sub:"Just added", f: () => true, newest: true},
+  ...OCCASIONS.map(o => ({id: "occ-" + o.id, title: o.label, sub: "Shop by occasion", f: p => p.tags.includes(o.id), hidden: true})),
+  {id:"lightning", title:"⚡ Lightning Deals", sub:"Limited-time offers", f: isLight, hidden: true},
+  {id:"clearance", title:"🏷️ Clearance Deals", sub:"Limited stock", f: isClear, hidden: true}
 ];
+function dealCard(p, kind){
+  const off = p.old > p.price ? Math.round((1 - p.price / p.old) * 100) : 0;
+  const left = p.stock !== null && p.stock > 0 && p.stock <= 50 ? `<span class="left">ONLY ${p.stock} LEFT</span>` : "";
+  let tm = "";
+  if (kind === "lt"){ const span = Math.max(p.ends - Date.now(), 1); tm = `<div class="tm"><span class="bar"><i data-bar="${p.ends}" style="width:0%"></i></span><span data-end="${p.ends}">${fmtLeft(p.ends)}</span></div>`; }
+  return `<button class="dcard ${kind}" onclick="openProduct('${jsq(p.code)}')" aria-label="${esc(p.name)}">
+    <span class="im"><img src="${esc(imgUrl(p.images[0]))}" alt="${esc(p.name)}" loading="lazy">${off ? `<span class="off">-${off}%</span>` : ""}${left}</span>
+    <span class="pr"><b>${rs(p.price)}</b>${off ? `<s>${rs(p.old)}</s>` : ""}</span>
+    <span class="nm" style="display:block">${esc(p.name)}</span>${tm}</button>`;
+}
+function fmtLeft(end){
+  let t = Math.max(0, Math.floor((end - Date.now()) / 1000));
+  const d = Math.floor(t / 86400); t %= 86400;
+  const pad = n => String(n).padStart(2, "0");
+  return (d ? d + "d " : "") + pad(Math.floor(t / 3600)) + ":" + pad(Math.floor(t % 3600 / 60)) + ":" + pad(t % 60);
+}
+function renderDeals(){
+  const L = PRODUCTS.filter(p => !p.sold && isLight(p)).sort((a, b) => a.ends - b.ends);
+  const C = PRODUCTS.filter(p => !p.sold && isClear(p));
+  if (!L.length && !C.length) return "";
+  const box = (cls, title, link, id, items) => `<div class="dbox"><div class="dhead ${cls}"><h2>${title}</h2><button onclick="showSection('${id}')"><span class="lk">${link}</span><span class="sk">See all</span> ›</button></div>
+    <div class="drow">${items.map(p => dealCard(p, cls)).join("")}</div></div>`;
+  return `<section class="panel" id="dealsPanel"><div class="deals ${L.length && C.length ? "" : "one"}">
+    ${L.length ? box("lt", "⚡ LIGHTNING DEALS", "Limited-time offers", "lightning", L) : ""}
+    ${C.length ? box("cl", "🏷️ CLEARANCE DEALS", "Limited stock", "clearance", C) : ""}
+  </div></section>`;
+}
+/* live countdown: updates every second; an expired deal disappears on its own */
+let DEAL_START = Date.now();
+setInterval(() => {
+  const now = Date.now(); let expired = false;
+  $$("[data-end]").forEach(el => { const e = +el.dataset.end; if (e <= now) expired = true; el.textContent = fmtLeft(e); });
+  $$("[data-bar]").forEach(el => { const e = +el.dataset.bar, span = 7 * 86400000; el.style.width = Math.min(100, Math.max(4, 100 - (e - now) / span * 100)) + "%"; });
+  if (expired){ renderSections(); if (section === "lightning") render(); }
+}, 1000);
 function renderSections(){
-  $("#sections").innerHTML = SECTIONS.map(s => {
+  $("#sections").innerHTML = renderDeals() + renderOccasions() + renderPromo() + SECTIONS.filter(s => !s.hidden).map(s => {
     let items = PRODUCTS.filter(p => !p.sold && s.f(p));
     if (s.newest) items = [...items].sort((a, b) => b.order - a.order).slice(0, 10);
     if (items.length < 2) return "";
@@ -966,13 +1357,31 @@ function doSearch(){
   document.getElementById("products").scrollIntoView({behavior: "smooth"});
 }
 let fSub = "";
+/* sub-category photos from the sheet's "Subcategories" tab (category, subcategory, photo link) */
+let SUB_PHOTOS = {};
+async function loadSubPhotos(){
+  try {
+    parseCSV(await getCSV(CONFIG.SUBS_CSV_URL, "subcategories.csv")).forEach(r => {
+      const c = (r.category || "").trim(), sb = (r.subcategory || "").trim(), ph = (r["photo link"] || r.photo || r.image || "").trim();
+      if (sb && ph){ SUB_PHOTOS[c + "||" + sb] = ph; if (!SUB_PHOTOS["*||" + sb]) SUB_PHOTOS["*||" + sb] = ph; }
+    });
+  } catch (e) {}
+}
+const subPhoto = (c, sb) => SUB_PHOTOS[c + "||" + sb] || "";
 function resetFilters(){
   fSub = "";
-  ["#fPrice", "#fColor", "#fSize", "#fMin", "#fMax"].forEach(k => { const el = $(k); if (el) el.value = ""; });
+  ["#fCat", "#fPrice", "#fColor", "#fSize", "#fMin", "#fMax"].forEach(k => { const el = $(k); if (el) el.value = ""; });
   const cr = $("#customRange"); if (cr) cr.classList.add("hide");
 }
 function clearFilters(){ resetFilters(); render(); }
 function onPrice(){ $("#customRange").classList.toggle("hide", $("#fPrice").value !== "custom"); render(); }
+function setBudget(max){
+  const on = $("#fPrice").value === "custom" && !$("#fMin").value && num($("#fMax").value) === max;
+  $("#fPrice").value = on ? "" : "custom"; $("#fMin").value = ""; $("#fMax").value = on ? "" : max;
+  $("#customRange").classList.toggle("hide", on); render();
+}
+const BUDGETS = [1000, 1500, 2000, 3000, 5000, 10000];
+const HERO_TONES = ["#F7E3EA,#FBF1F4", "#E4EEF8,#F3F7FC", "#E3F2EA,#F4FAF6", "#FBEFD9,#FDF7EC", "#ECE6F8,#F6F3FC", "#DDF1EF,#F1F9F8"];
 function pickSub(v){ fSub = fSub === v ? "" : v; $("#fColor").value = ""; $("#fSize").value = ""; render(); }
 function fillSelect(id, label, values, keep){
   const el = $(id), cur = keep;
@@ -1000,11 +1409,51 @@ function render(){
     const cnt = v => scope.filter(p => p.subs.includes(v)).length;
     if (all.length){
       sc.classList.remove("hide");
+      const withPics = all.some(v => subPhoto(current, v));
+      sc.classList.toggle("pics", withPics);
+      if (withPics){
+        const ph = v => { const u = subPhoto(current, v); return u ? `<img src="${esc(imgUrl(u))}" alt="" loading="lazy">` : `<span class="ph0">${catIco(current)}</span>`; };
+        sc.innerHTML = `<button class="${fSub ? "" : "on"}" onclick="pickSub('')"><span class="sp"><span class="ph0">${catIco(current)}</span></span><b>All</b><em>${scope.length} items</em></button>` +
+          all.map(v => { const n = cnt(v); return `<button class="${fSub === v ? "on" : ""} ${n ? "" : "none"}" onclick="pickSub('${jsq(v)}')"><span class="sp">${ph(v)}</span><b>${esc(v)}</b><em>${n ? n + (n === 1 ? " item" : " items") : "Coming soon"}</em></button>`; }).join("");
+      } else
       sc.innerHTML = `<button class="${fSub ? "" : "on"}" onclick="pickSub('')">All<em>${scope.length}</em></button>` +
         all.map(v => { const n = cnt(v); return `<button class="${fSub === v ? "on" : ""} ${n ? "" : "none"}" onclick="pickSub('${jsq(v)}')">${esc(v)}<em>${n || "soon"}</em></button>`; }).join("");
     } else sc.classList.add("hide");
   } else { sc.classList.add("hide"); fSub = ""; }
+  // category landing page (banner, budget, related)
+  const landing = current !== "all" && !query && !section;
+  const hero = $("#catHero"), bud = $("#budget");
+  if (landing){
+    const tone = HERO_TONES[[...current].reduce((a, ch) => a + ch.charCodeAt(0), 0) % HERO_TONES.length].split(",");
+    const src = catImgSrc(current);
+    const pic = CAT_BANNER[current] ? "" : src ? `<img class="${CAT_PHOTO[current] ? "ph" : ""}" src="${esc(src)}" alt="">` : `<span class="hic">${icon(current)}</span>`;
+    hero.innerHTML = `<div class="ch-tx"><span class="ch-k">SHOP ${esc(current.toUpperCase())}</span><h2>Buy ${esc(current)} Online</h2><p>Hand-picked by Umar Deals. Cash on Delivery all over Pakistan.</p></div><div class="ch-pic">${pic}</div>`;
+    hero.style.background = `linear-gradient(120deg,${tone[0]},${tone[1]})`;
+    hero.classList.toggle("banner", !!CAT_BANNER[current]);
+    if (CAT_BANNER[current]) hero.insertAdjacentHTML("afterbegin", `<img class="ch-bg" src="${esc(imgUrl(CAT_BANNER[current]))}" alt="">`);
+    hero.classList.remove("hide");
+  } else hero.classList.add("hide");
+  // "More products": category filter (only on the all-products view)
+  const fcEl = $("#fCat"), showCatF = current === "all" && !query && !section;
+  fcEl.classList.toggle("hide", !showCatF);
+  if (showCatF){
+    const keep = fcEl.value, counts = {};
+    PRODUCTS.forEach(p => p.cats.forEach(c => counts[c] = (counts[c] || 0) + 1));
+    const cats = [...CATEGORIES, ...Object.keys(counts).filter(c => !CATEGORIES.includes(c))].filter(c => counts[c]);
+    fcEl.innerHTML = `<option value="">📂 All categories</option>` + cats.map(c => `<option value="${esc(c)}" ${c === keep ? "selected" : ""}>${esc(c)} (${counts[c]})</option>`).join("");
+    if (keep && !counts[keep]) fcEl.value = "";
+    if (fcEl.value){ scope = scope.filter(p => p.cats.includes(fcEl.value)); }
+    title = "More products";
+  } else fcEl.value = "";
   let items = fSub ? scope.filter(p => p.subs.includes(fSub)) : scope;
+  if (landing){
+    const bl = BUDGETS.filter(b => items.some(p => p.price <= b));
+    const curMax = $("#fPrice").value === "custom" && !$("#fMin").value ? num($("#fMax").value) : 0;
+    if (bl.length > 1){
+      bud.innerHTML = `<b>Shop ${esc(current)} by budget</b><div class="bchips">${bl.map(b => `<button class="${curMax === b ? "on" : ""}" onclick="setBudget(${b})">Under Rs. ${b.toLocaleString("en-US")}</button>`).join("")}</div>`;
+      bud.classList.remove("hide");
+    } else bud.classList.add("hide");
+  } else bud.classList.add("hide");
   if (fSub) title += " › " + fSub;
   // 3) price
   const fp = $("#fPrice").value;
@@ -1024,7 +1473,8 @@ function render(){
   // 5) sort
   const so = $("#sort").value;
   items.sort((a, b) => (a.sold - b.sold) || (so === "low" ? a.price - b.price : so === "high" ? b.price - a.price : b.order - a.order));
-  const anyF = !!(fSub || fp || fc || fs);
+  const anyF = !!(fSub || fp || fc || fs || $("#fCat").value);
+  $("#fCat").classList.toggle("act", !!$("#fCat").value);
   $("#fPrice").classList.toggle("act", !!fp); $("#fColor").classList.toggle("act", !!fc); $("#fSize").classList.toggle("act", !!fs);
   $("#fClear").classList.toggle("hide", !anyF);
   $("#fCount").textContent = `${items.length} products`;
@@ -1034,7 +1484,14 @@ function render(){
     $("#grid").innerHTML = `<div class="empty">${emptyCat ? "Products in this category are <b>coming soon</b>. 🛍️<br>" : anyF ? "No products match these filters. Try changing them. 🔍<br>" : "No products here right now. "}Tell us on WhatsApp what you need and we will find it for you! 😊<br><br>${anyF ? `<button class="btn btn-line" onclick="clearFilters()">Clear filters</button> ` : ""}<a class="btn btn-green" target="_blank" rel="noopener" href="${waLink("Hi! I am looking for something in " + (query || (fSub || current)) + ".")}">Ask on WhatsApp</a></div>`;
     return;
   }
-  $("#grid").innerHTML = items.map(p => card(p)).join("");
+  $("#grid").innerHTML = items.map(p => card(p)).join("") + relatedCats(landing);
+}
+function relatedCats(landing){
+  if (!landing) return "";
+  const counts = {}; PRODUCTS.forEach(p => p.cats.forEach(c => counts[c] = (counts[c] || 0) + 1));
+  const rel = CATEGORIES.filter(c => c !== current && counts[c]).slice(0, 8);
+  if (!rel.length) return "";
+  return `<div class="relcats"><b>You may also like</b><div>${rel.map(c => `<button onclick="setCat('${jsq(c)}',true)">${esc(c)} <i>↗</i></button>`).join("")}</div></div>`;
 }
 
 /* ---------- product modal ---------- */
@@ -1072,7 +1529,7 @@ function drawModal(p){
           ${sel.chart ? sizeBox(p) : ""}</div>` : ""}
         ${p.colors.length ? `<div><div class="opt-label">Choose colour / design</div><div class="opts">${p.colors.map((c, i) => `<button class="${sel.color === c ? "on" : ""}" onclick="pick('color','${jsq(c)}',${i})">${esc(c)}</button>`).join("")}</div></div>` : ""}
         <div><div class="opt-label">Quantity</div>
-          <div class="qty"><button onclick="chQty(-1)" aria-label="Kam">−</button><span id="mq">${sel.qty}</span><button onclick="chQty(1)" aria-label="Zyada">+</button></div></div>
+          <div class="qty"><button onclick="chQty(-1)" aria-label="Decrease">−</button><span id="mq">${sel.qty}</span><button onclick="chQty(1)" aria-label="Increase">+</button></div></div>
         <div class="note">🚚 Delivery ${rs(CONFIG.DELIVERY)} (may vary slightly by city/area)${freeOn() ? ` · <b>${rs(CONFIG.FREE_DELIVERY_MIN)}+ and ${CONFIG.FREE_DELIVERY_MIN_ITEMS}+ items = FREE delivery</b>` : ""} · 💵 Cash on Delivery</div>
         <div class="err" id="merr"></div>
         <div class="mbtns">
@@ -1120,7 +1577,7 @@ let WISH = lsGet("ud_wish", []), RECENT = lsGet("ud_recent", []);
 function renderQuick(){
   const Q = [["Women Stitched","Women"],["Men Stitched","Men"],["Kids Clothing","Kids"],["Winter","Winter"],["Kitchenware","Kitchen"],["Fashion Accessories","Wallets"],["Car & Bike","Car & Bike"]];
   const has = c => PRODUCTS.some(p => p.cats.includes(c));
-  $("#quick").innerHTML = Q.filter(([c]) => has(c)).map(([c, l]) => `<button onclick="setCat('${jsq(c)}',true)">${icon(c)}${esc(l)}</button>`).join("")
+  $("#quick").innerHTML = Q.filter(([c]) => has(c)).map(([c, l]) => { const src = catImgSrc(c); return `<button onclick="setCat('${jsq(c)}',true)">${src ? `<img class="qi ${CAT_PHOTO[c] ? "ph" : ""}" src="${esc(src)}" alt="">` : icon(c)}${esc(l)}</button>`; }).join("")
     + `<button onclick="showSection('under')">${icon("tag")}Under Rs. 1,000</button>`;
 }
 function fillSizes(){
@@ -1246,7 +1703,7 @@ function drawCart(){
     <div class="row total"><span>Total (COD)</span><span>${rs(t.total)}</span></div>
     ${t.free ? "" : `<div class="note" style="font-size:12px">Delivery charges may vary slightly by city/area. We will tell you before confirming your order.</div>`}
     <div class="form">
-      <input id="cName" placeholder="Poora naam" value="${esc(saved.name || "")}" autocomplete="name">
+      <input id="cName" placeholder="Full name" value="${esc(saved.name || "")}" autocomplete="name">
       <input id="cPhone" placeholder="Mobile number (03XX XXXXXXX)" inputmode="tel" value="${esc(saved.phone || "")}" autocomplete="tel">
       <input id="cCity" placeholder="City" value="${esc(saved.city || "")}" autocomplete="address-level2">
       <textarea id="cAddr" placeholder="Full address (house no, street, area, landmark)" autocomplete="street-address">${esc(saved.addr || "")}</textarea>
@@ -1298,7 +1755,7 @@ Delivery: ${t.free ? "FREE 🎉" : rs(t.del)}
       Send order on WhatsApp
     </a>
     <button class="rcpt" onclick="downloadReceipt()">${DL} Download order summary (image)</button>
-    <button class="rm" style="justify-self:center;color:var(--muted)" onclick="drawCart()">← Wapas, details badlein</button>`;
+    <button class="rm" style="justify-self:center;color:var(--muted)" onclick="drawCart()">← Back, edit details</button>`;
 }
 let PENDING = null, LAST_ORDER = null;
 function orderSent(){
@@ -1409,7 +1866,7 @@ function closeAll(){
 }
 document.addEventListener("keydown", e => { if (e.key === "Escape"){ if ($("#modal").classList.contains("show") || $("#drawer").classList.contains("show")) closeAll(); else if ($("#chat").classList.contains("show")) toggleChat(); } });
 window.addEventListener("hashchange", openFromHash);
-let tt; function toast(m){ const t = $("#toast"); t.textContent = m; t.classList.add("show"); clearTimeout(tt); tt = setTimeout(() => t.classList.remove("show"), 3200); }
+let tt; function toast(m){ const t = $("#toast"); t.textContent = T(m); t.classList.add("show"); clearTimeout(tt); tt = setTimeout(() => t.classList.remove("show"), 3200); }
 
 const SOC = {
   instagram: '<path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zM17.3 5.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4zM12 2c-2.7 0-3 0-4.1.1C4.3 2.3 2.3 4.3 2.1 7.9 2 9 2 9.3 2 12s0 3 .1 4.1c.2 3.6 2.2 5.6 5.8 5.8 1.1.1 1.4.1 4.1.1s3 0 4.1-.1c3.6-.2 5.6-2.2 5.8-5.8.1-1.1.1-1.4.1-4.1s0-3-.1-4.1c-.2-3.6-2.2-5.6-5.8-5.8C15 2 14.7 2 12 2zm0 1.8c2.7 0 3 0 4 .1 2.7.1 3.9 1.4 4 4 .1 1 .1 1.3.1 4s0 3-.1 4c-.1 2.6-1.3 3.9-4 4-1 .1-1.3.1-4 .1s-3 0-4-.1c-2.7-.1-3.9-1.4-4-4C3.8 15 3.8 14.7 3.8 12s0-3 .1-4c.1-2.6 1.3-3.9 4-4 1-.1 1.3-.2 4.1-.2z"/>',
@@ -1661,7 +2118,7 @@ if (CONFIG.ANALYTICS_TOKEN){
   const sc = document.createElement("script"); sc.defer = true; sc.src = "https://static.cloudflareinsights.com/beacon.min.js";
   sc.setAttribute("data-cf-beacon", JSON.stringify({token: CONFIG.ANALYTICS_TOKEN})); document.head.appendChild(sc);
 }
-init(); updateCount(); updateWish(); loadProducts();
+applyLang(); init(); updateCount(); updateWish(); loadProducts();
 </script>
 </body>
 </html>
