@@ -896,6 +896,17 @@ html[dir=rtl] .mega button{text-align:right}
 @keyframes picIn{from{opacity:0;transform:rotate(6deg) translateY(24px) scale(.94)}to{opacity:1;transform:rotate(2.5deg)}}
 @media (hover:hover){.slider:hover .slide.on .pic.photo{transform:rotate(0deg) scale(1.02);transition:transform .5s cubic-bezier(.2,.8,.2,1)}}
 @media (max-width:860px){.slide .pic.photo{width:150px;padding:5px;border-radius:20px}.slide .pic.photo img{border-radius:15px}.slide .pic.photo .pchip{display:none}}
+/* banner cut-out picture: the person stands on the banner itself */
+.slide .pic.cut{background:none;box-shadow:none;transform:none;overflow:visible;aspect-ratio:auto;width:min(100%,340px);height:350px;margin-top:10px;display:flex;align-items:flex-end;justify-content:center}
+.slide .pic.cut img{position:relative;z-index:2;height:100%;width:auto;max-width:100%;object-fit:contain;filter:drop-shadow(0 18px 24px rgba(0,0,0,.35))}
+.slide .pic.cut .glow{position:absolute;z-index:1;left:50%;top:46%;width:300px;height:300px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(245,184,46,.55) 0%,rgba(245,184,46,.18) 45%,transparent 70%)}
+.slide .pic.cut::before{content:"";position:absolute;z-index:1;left:50%;top:46%;width:270px;height:270px;transform:translate(-50%,-50%);border-radius:50%;border:2px solid rgba(255,216,119,.45)}
+.slide .pic.cut .floor{position:absolute;z-index:1;bottom:-6px;left:50%;width:62%;height:22px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(ellipse,rgba(0,0,0,.4),transparent 70%)}
+.slide .pic.cut .pchip{position:absolute;z-index:3;left:6px;bottom:70px;background:linear-gradient(180deg,#FFDC85,#F5B82E 60%,#E3A21A);color:var(--green-3);font-size:12.5px;font-weight:700;padding:7px 14px;border-radius:999px;box-shadow:0 10px 22px rgba(0,0,0,.25);transform:rotate(-3deg);white-space:nowrap}
+.slide.on .pic.cut img{animation:cutIn .9s cubic-bezier(.2,.8,.2,1)}
+@keyframes cutIn{from{opacity:0;transform:translateX(30px) scale(.96)}to{opacity:1;transform:none}}
+@media (hover:hover){.slider:hover .slide.on .pic.cut img{transform:scale(1.04);transition:transform .5s cubic-bezier(.2,.8,.2,1)}}
+@media (max-width:860px){.slide .pic.cut{width:150px;height:230px;bottom:30px;right:10px}.slide .pic.cut .glow{width:170px;height:170px}.slide .pic.cut::before{width:150px;height:150px}.slide .pic.cut .pchip{display:none}}
 </style>
 </head>
 <body>
@@ -1420,7 +1431,7 @@ async function loadBanners(){
     let rows = parseCSV(await getCSV(CONFIG.BANNERS_CSV_URL, "banners.csv")).filter(ok);
     if (!rows.length && CONFIG.BANNERS_CSV_URL) rows = parseCSV(await getCSV("", "banners.csv")).filter(ok);
     if (rows.length) SLIDES = rows.map(r => ({theme: THEMES[(r.theme || "").toLowerCase()] || "s1", kick: r.kick, title: esc(r.title) + (r.highlight ? ` <span>${esc(r.highlight)}</span>` : ""),
-      text: r.text, btn: r.button || "Shop now", cat: r.category || "all", product: r.product, image: r.image, video: r.video}));
+      text: r.text, btn: r.button || "Shop now", cat: r.category || "all", product: r.product, image: r.image, video: r.video, style: (r.style || "").toLowerCase().trim()}));
   } catch (e) {}
   if (!SLIDES.length) SLIDES = CONFIG.SLIDES.map(s => ({...s, title: s.title}));
 }
@@ -1433,6 +1444,7 @@ function renderSlides(){
     const go = s.cat && s.cat !== "all" ? `setCat('${jsq(s.cat)}',true)` : `setCat('all',true)`;
     let media = "";
     if (s.video) media = `<div class="pic vid"><video src="${esc(s.video)}" muted loop playsinline autoplay preload="metadata"${img ? ` poster="${esc(img)}"` : ""}></video>${p ? `<span class="tag">${rs(p.price)}</span>` : ""}</div>`;
+    else if (img && s.image && !p && s.style === "cutout") media = `<button class="pic cut" onclick="${go}" aria-label="${esc(s.btn)}"><span class="glow"></span><img src="${esc(img)}" alt=""><span class="floor"></span><span class="pchip">✦ ${esc(s.kick ? s.kick.charAt(0) + s.kick.slice(1).toLowerCase() : "New in")}</span></button>`;
     else if (img && s.image && !p) media = `<button class="pic photo" onclick="${go}" aria-label="${esc(s.btn)}"><img src="${esc(img)}" alt=""><span class="pchip">✦ ${esc(s.kick ? s.kick.charAt(0) + s.kick.slice(1).toLowerCase() : "New in")}</span></button>`;
     else if (img) media = `<button class="pic" onclick="${p ? `openProduct('${jsq(p.code)}')` : go}" aria-label="${esc(p ? p.name : s.btn)}"><img src="${esc(img)}" alt="">${p ? `<span class="tag">${rs(p.price)}</span>` : ""}</button>`;
     else media = `<div class="bigicon">${icon("truck")}</div>`;
