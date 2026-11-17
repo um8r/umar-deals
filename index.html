@@ -907,6 +907,14 @@ html[dir=rtl] .mega button{text-align:right}
 @keyframes cutIn{from{opacity:0;transform:translateX(30px) scale(.96)}to{opacity:1;transform:none}}
 @media (hover:hover){.slider:hover .slide.on .pic.cut img{transform:scale(1.04);transition:transform .5s cubic-bezier(.2,.8,.2,1)}}
 @media (max-width:860px){.slide .pic.cut{width:150px;height:230px;bottom:30px;right:10px}.slide .pic.cut .glow{width:170px;height:170px}.slide .pic.cut::before{width:150px;height:150px}.slide .pic.cut .pchip{display:none}}
+/* banner photo frame with 3 changing pictures */
+.slide .pic.photo .pin{position:relative;display:block;width:100%;height:100%;border-radius:21px;overflow:hidden;background:#EFE7D8}
+.slide .pic.photo .pin img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:0;opacity:0;transform:scale(1.06);transition:opacity .7s ease,transform 2.6s ease}
+.slide .pic.photo .pin img.on{opacity:1;transform:scale(1)}
+.slide .pic.photo .pbar{position:absolute;z-index:3;left:50%;bottom:16px;transform:translateX(-50%);display:flex;gap:5px;padding:5px 8px;border-radius:99px;background:rgba(0,0,0,.28);backdrop-filter:blur(6px)}
+.slide .pic.photo .pbar i{width:6px;height:6px;border-radius:99px;background:rgba(255,255,255,.6);transition:width .3s,background .3s}
+.slide .pic.photo .pbar i.on{width:18px;background:#FFD877}
+@media (max-width:860px){.slide .pic.photo .pbar{bottom:8px;padding:4px 6px}.slide .pic.photo .pin{border-radius:15px}}
 </style>
 </head>
 <body>
@@ -1439,13 +1447,14 @@ function renderSlides(){
   const S = SLIDES;
   $("#slider").innerHTML = S.map((s, i) => {
     const p = PRODUCTS.find(x => x.code === s.product);
-    const img = s.image ? imgUrl(s.image) : p ? imgUrl(p.images[0]) : "";
+    const imgs = String(s.image || "").split("|").map(x => x.trim()).filter(Boolean).map(imgUrl);
+    const img = imgs[0] || (p ? imgUrl(p.images[0]) : "");
     const H = i === 0 ? "h1" : "h2";
     const go = s.cat && s.cat !== "all" ? `setCat('${jsq(s.cat)}',true)` : `setCat('all',true)`;
     let media = "";
     if (s.video) media = `<div class="pic vid"><video src="${esc(s.video)}" muted loop playsinline autoplay preload="metadata"${img ? ` poster="${esc(img)}"` : ""}></video>${p ? `<span class="tag">${rs(p.price)}</span>` : ""}</div>`;
     else if (img && s.image && !p && s.style === "cutout") media = `<button class="pic cut" onclick="${go}" aria-label="${esc(s.btn)}"><span class="glow"></span><img src="${esc(img)}" alt=""><span class="floor"></span><span class="pchip">✦ ${esc(s.kick ? s.kick.charAt(0) + s.kick.slice(1).toLowerCase() : "New in")}</span></button>`;
-    else if (img && s.image && !p) media = `<button class="pic photo" onclick="${go}" aria-label="${esc(s.btn)}"><img src="${esc(img)}" alt=""><span class="pchip">✦ ${esc(s.kick ? s.kick.charAt(0) + s.kick.slice(1).toLowerCase() : "New in")}</span></button>`;
+    else if (img && s.image && !p) media = `<button class="pic photo" onclick="${go}" aria-label="${esc(s.btn)}"><span class="pin">${imgs.map((u, n) => `<img class="${n ? "" : "on"}" src="${esc(u)}" alt="" ${i || n ? 'loading="lazy"' : ""}>`).join("")}</span>${imgs.length > 1 ? `<span class="pbar">${imgs.map((u, n) => `<i class="${n ? "" : "on"}"></i>`).join("")}</span>` : ""}<span class="pchip">✦ ${esc(s.kick ? s.kick.charAt(0) + s.kick.slice(1).toLowerCase() : "New in")}</span></button>`;
     else if (img) media = `<button class="pic" onclick="${p ? `openProduct('${jsq(p.code)}')` : go}" aria-label="${esc(p ? p.name : s.btn)}"><img src="${esc(img)}" alt="">${p ? `<span class="tag">${rs(p.price)}</span>` : ""}</button>`;
     else media = `<div class="bigicon">${icon("truck")}</div>`;
     if (s.theme === "sfull" && img) return `<button class="slide sfull ${i === 0 ? "on" : ""}" onclick="${p ? `openProduct('${jsq(p.code)}')` : go}" aria-label="${esc(s.kick || s.btn || "Offer")}"><img src="${esc(img)}" alt="${esc(s.kick || "Offer")}"></button>`;
@@ -1465,14 +1474,29 @@ function renderSlides(){
     x0 = null; setTimeout(() => slidePaused = false, 4000);
   };
 }
-function startSlides(){ clearInterval(slideTimer); slideTimer = setInterval(() => { if (!slidePaused && !document.hidden) goSlide(slideIx + 1); }, 5500); }
+function startSlides(){ clearInterval(slideTimer); slideTimer = setInterval(() => { if (!slidePaused && !document.hidden) goSlide(slideIx + 1); }, 6000); startPics(); }
+/* photos inside the active banner change every 2 seconds */
+let picTimer;
+function startPics(){
+  clearInterval(picTimer);
+  const sl = $$(".slide")[slideIx]; if (!sl) return;
+  const ims = sl.querySelectorAll(".pic.photo .pin img"), bars = sl.querySelectorAll(".pic.photo .pbar i");
+  ims.forEach((im, k) => im.classList.toggle("on", k === 0)); bars.forEach((b, k) => b.classList.toggle("on", k === 0));
+  if (ims.length < 2) return;
+  let k = 0;
+  picTimer = setInterval(() => {
+    if (document.hidden) return;
+    k = (k + 1) % ims.length;
+    ims.forEach((im, n) => im.classList.toggle("on", n === k)); bars.forEach((b, n) => b.classList.toggle("on", n === k));
+  }, 2000);
+}
 function goSlide(i, user){
   const sl = $$(".slide"), d = $$(".dots button"); if (!sl.length) return;
   slideIx = (i + sl.length) % sl.length;
   sl.forEach((s, k) => s.classList.toggle("on", k === slideIx));
   d.forEach((s, k) => s.classList.toggle("on", k === slideIx));
   sl.forEach((s, k) => { const v = s.querySelector("video"); if (v){ if (k === slideIx) v.play().catch(() => {}); else v.pause(); } });
-  if (user) startSlides();
+  if (user) startSlides(); else startPics();
 }
 
 /* ---------- categories ---------- */
