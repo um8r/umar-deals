@@ -1990,14 +1990,14 @@ async function onSnap(file){
   document.getElementById("products").scrollIntoView({behavior: "smooth"});
 }
 function renderSnap(){
-  const pics = ["snap/snap-1.jpg", "snap/snap-2.jpg", "snap/snap-3.jpg", "snap/snap-4.jpg"];
+  const pics = ["snap-1.jpg", "snap-2.jpg", "snap-3.jpg", "snap-4.jpg"];
   return `<section class="snap" id="snapPanel">
     <div class="sx"><span class="sk"><i></i>PHOTO SEARCH</span>
       <h3>Snap it. <span>Find it.</span></h3>
       <p>Take a photo or pick one from your gallery. We will show products with a similar colour and look.</p>
       <div class="sbtns"><button class="sb g" onclick="openSnap()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.6"/></svg>Search with a photo</button>
       <a class="sb l" target="_blank" rel="noopener" href="${waLink("Hi! I have a photo of a product. Can you find it for me?")}">Send photo on WhatsApp</a></div></div>
-    ${pics.length ? `<button class="stack" onclick="openSnap()" aria-label="Search with a photo">${pics.map(u => `<img src="${esc(imgUrl(u))}" alt="" loading="lazy">`).join("")}<span class="cam"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.6"/></svg></span></button>` : ""}
+    ${pics.length ? `<button class="stack" onclick="openSnap()" aria-label="Search with a photo">${pics.map(u => `<img src="${esc(u)}" alt="" loading="lazy">`).join("")}<span class="cam"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.6"/></svg></span></button>` : ""}
   </section>`;
 }
 function relatedCats(landing){
