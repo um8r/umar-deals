@@ -882,6 +882,11 @@ html[dir=rtl] .mega button{text-align:right}
 .pager button.on{background:var(--g-grad);box-shadow:var(--btn-sh),0 0 0 3px rgba(245,184,46,.35)}
 .pager .pnav{padding:0 16px}
 @media (max-width:560px){.pager button{min-width:34px;height:36px;padding:0 6px}.pager .pnav{padding:0 8px}}
+/* product photo fills the card */
+.card .ph{aspect-ratio:4/5;background:#FAF6EE}
+.card .ph img{object-fit:cover;object-position:96% 50%}
+.card .ph img.wd{object-fit:contain;object-position:center;background:#fff}
+@media (hover:hover){.card:hover .ph img{transform:scale(1.05);transform-origin:70% 40%}.card:hover .ph img.wd{transform:scale(1.04);transform-origin:center}}
 </style>
 </head>
 <body>
@@ -1563,7 +1568,7 @@ function dealCard(p, kind){
   let tm = "";
   if (kind === "lt"){ const span = Math.max(p.ends - Date.now(), 1); tm = `<div class="tm"><span class="bar"><i data-bar="${p.ends}" style="width:0%"></i></span><span data-end="${p.ends}">${fmtLeft(p.ends)}</span></div>`; }
   return `<button class="dcard ${kind}" onclick="openProduct('${jsq(p.code)}')" aria-label="${esc(p.name)}">
-    <span class="im"><img src="${esc(imgUrl(p.images[0]))}" alt="${esc(p.name)}" loading="lazy">${off ? `<span class="off">-${off}%</span>` : ""}${left}</span>
+    <span class="im"><img src="${esc(imgUrl(p.images[0]))}" alt="${esc(p.name)}" loading="lazy" onload="if(this.naturalWidth>this.naturalHeight*1.15)this.classList.add('wd')">${off ? `<span class="off">-${off}%</span>` : ""}${left}</span>
     <span class="pr"><b>${rs(p.price)}</b>${off ? `<s>${rs(p.old)}</s>` : ""}</span>
     <span class="nm" style="display:block">${esc(p.name)}</span>${tm}</button>`;
 }
@@ -1620,7 +1625,7 @@ function card(p, opt){
     <button class="heart ${WISH.includes(p.code) ? "on" : ""}" onclick="toggleWish('${c}',this)" aria-label="Wishlist">${HEART}</button>
     ${opt && opt.dl ? `<a class="dlc" href="${esc(imgUrl(p.images[0]))}" download="${esc(dlName(p))}" aria-label="Download photo" title="Download photo">${DL}</a>` : ""}
     <button class="ph" onclick="openProduct('${c}')" aria-label="${esc(p.name)}">
-      <img src="${esc(imgUrl(p.images[0]))}" alt="${esc(p.name)}" loading="lazy">
+      <img src="${esc(imgUrl(p.images[0]))}" alt="${esc(p.name)}" loading="lazy" onload="if(this.naturalWidth>this.naturalHeight*1.15)this.classList.add('wd')">
       <span class="badges">${p.sold ? '<span class="badge sold">Sold Out</span>' : ""}${!p.sold && off ? `<span class="badge off">${off}% OFF</span>` : ""}${!p.sold && p.tags.includes("top") ? '<span class="badge top">⭐ Top Pick</span>' : ""}</span>
       ${p.images.length > 1 ? `<span class="badge multi">${p.colors.length > 1 ? p.colors.length + " designs" : p.images.length + " photos"}</span>` : ""}
     </button>
