@@ -1441,6 +1441,8 @@ async function loadProducts(){
     return;
   }
   await Promise.all([loadBanners(), loadSubPhotos(), loadCards(), loadCatInfo()]);
+  /* a category's "All" sub-photo becomes its logo everywhere (unless the Categories sheet has its own photo) */
+  Object.keys(SUB_PHOTOS).forEach(k => { const [c, sb] = k.split("||"); if (sb === "All" && c !== "*" && !CAT_PHOTO[c]) CAT_PHOTO[c] = SUB_PHOTOS[k]; });
   renderSide();
   renderSlides(); renderQuick(); renderCats(); renderPersonal(); renderSections(); renderVideos(); render(); openFromHash();
 }
@@ -1879,7 +1881,7 @@ const GROUPS = [
 const grpOf = k => k && k[0] === "@" ? GROUPS.find(g => g[0] === k.slice(1)) : null;
 const inCur = p => { if (current === "all") return true; const g = grpOf(current); return g ? g[2].some(c => p.cats.includes(c)) : p.cats.includes(current); };
 const curLabel = () => { const g = grpOf(current); return g ? g[0] : current; };
-const tnPic = k => CAT_PICS.has(k) ? `<img src="./${k}.webp" alt="" loading="lazy" width="24" height="24">` : "";
+const tnPic = k => { const c = CATEGORIES.find(x => catSlug(x) === k); const u = c ? catImgSrc(c) : CAT_PICS.has(k) ? `./${k}.webp` : ""; return u ? `<img src="${esc(u)}" alt="" loading="lazy" width="24" height="24">` : ""; };
 function renderTopnav(){
   const counts = {}; PRODUCTS.forEach(p => p.cats.forEach(c => counts[c] = (counts[c] || 0) + 1));
   const cv = `<svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>`;
@@ -1887,7 +1889,7 @@ function renderTopnav(){
   GROUPS.forEach(([name, ic, cats]) => {
     const single = cats.length === 1, key = single ? cats[0] : "@" + name;
     const on = current === key || (!single && cats.includes(current));
-    const items = cats.map(c => { const n = counts[c] || 0; return `<button class="${n ? "" : "none"}" onclick="setCat('${jsq(c)}',true)">${CAT_PICS.has(catSlug(c)) ? `<img src="./${catSlug(c)}.webp" alt="" loading="lazy">` : ""}<span>${esc(c)}<em>${n ? n + (n === 1 ? " item" : " items") : "Coming soon"}</em></span></button>`; }).join("");
+    const items = cats.map(c => { const n = counts[c] || 0; return `<button class="${n ? "" : "none"}" onclick="setCat('${jsq(c)}',true)">${catImgSrc(c) ? `<img src="${esc(catImgSrc(c))}" alt="" loading="lazy">` : ""}<span>${esc(c)}<em>${n ? n + (n === 1 ? " item" : " items") : "Coming soon"}</em></span></button>`; }).join("");
     html.push(`<div class="tn"><button class="tb ${on ? "on" : ""}" onclick="setCat('${jsq(key)}',true)">${tnPic(ic)}${esc(name)}${single ? "" : cv}</button>${single ? "" : `<div class="mega">${items}<button class="mall" onclick="setCat('${jsq(key)}',true)">View all ${esc(name)} →</button></div>`}</div>`);
   });
   $("#topnav").innerHTML = html.join("");
