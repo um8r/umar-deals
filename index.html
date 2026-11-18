@@ -1773,7 +1773,7 @@ function render(keepPage){
       sc.classList.toggle("pics", withPics);
       if (withPics){
         const ph = v => { const u = subPhoto(current, v); return u ? `<img src="${esc(imgUrl(u))}" alt="" loading="lazy">` : `<span class="ph0">${catIco(current)}</span>`; };
-        sc.innerHTML = `<button class="${fSub ? "" : "on"}" onclick="pickSub('')"><span class="sp"><span class="ph0">${catIco(current)}</span></span><b>All</b><em>${scope.length} items</em></button>` +
+        sc.innerHTML = `<button class="${fSub ? "" : "on"}" onclick="pickSub('')"><span class="sp">${ph("All")}</span><b>All</b><em>${scope.length} items</em></button>` +
           all.map(v => { const n = cnt(v); return `<button class="${fSub === v ? "on" : ""} ${n ? "" : "none"}" onclick="pickSub('${jsq(v)}')"><span class="sp">${ph(v)}</span><b>${esc(v)}</b><em>${n ? n + (n === 1 ? " item" : " items") : "Coming soon"}</em></button>`; }).join("");
       } else
       sc.innerHTML = `<button class="${fSub ? "" : "on"}" onclick="pickSub('')">All<em>${scope.length}</em></button>` +
