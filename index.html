@@ -1508,7 +1508,7 @@ function goSlide(i, user){
 }
 
 /* ---------- categories ---------- */
-/* category pictures (images/cat/<name>.webp); a category without a picture keeps its line icon */
+/* category pictures (./<name>.webp); a category without a picture keeps its line icon */
 const CAT_PICS = new Set(["all", "women-stitched", "shoes", "bags", "bedding", "books-stationery", "car-bike", "cosmetics", "electronic-accessories", "electronics", "fashion-accessories", "festive-collection", "fitness", "home-decor", "home-essentials", "home-linen", "islamic-accessories", "jewellery", "kid-accessories", "kids-clothing", "kitchenware", "men-s-shawls", "men-stitched", "men-undergarments", "men-unstitched", "mobile-gadgets", "mother-baby", "other", "perfumes", "watches", "winter", "women-handbags", "women-s-shawls", "women-undergarments", "women-unstitched"]);
 const catSlug = k => String(k).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 let CAT_PHOTO = {}, CAT_BANNER = {};
@@ -1522,9 +1522,9 @@ async function loadCatInfo(){
   } catch (e) {}
 }
 /* picture for a category: your sheet photo first, then the designed icon, then the line icon */
-const catImgSrc = k => CAT_PHOTO[k] ? imgUrl(CAT_PHOTO[k]) : CAT_PICS.has(catSlug(k)) ? `images/cat/${catSlug(k)}.webp` : "";
+const catImgSrc = k => CAT_PHOTO[k] ? imgUrl(CAT_PHOTO[k]) : CAT_PICS.has(catSlug(k)) ? `./${catSlug(k)}.webp` : "";
 const CAT_FULL = new Set(["bags", "home-essentials", "home-linen", "mother-baby", "electronic-accessories", "watches", "books-stationery", "women-undergarments", "men-undergarments", "other"]);
-const catIco = k => CAT_PHOTO[k] ? `<span class="circ pic photo"><img src="${esc(imgUrl(CAT_PHOTO[k]))}" alt="" loading="lazy"></span>` : CAT_PICS.has(catSlug(k)) ? `<span class="circ pic${CAT_FULL.has(catSlug(k)) ? " photo" : ""}"><img src="images/cat/${catSlug(k)}.webp" data-k="${esc(k)}" alt="" loading="lazy" width="160" height="160"></span>` : `<span class="circ">${icon(k)}</span>`;
+const catIco = k => CAT_PHOTO[k] ? `<span class="circ pic photo"><img src="${esc(imgUrl(CAT_PHOTO[k]))}" alt="" loading="lazy"></span>` : CAT_PICS.has(catSlug(k)) ? `<span class="circ pic${CAT_FULL.has(catSlug(k)) ? " photo" : ""}"><img src="./${catSlug(k)}.webp" data-k="${esc(k)}" alt="" loading="lazy" width="160" height="160"></span>` : `<span class="circ">${icon(k)}</span>`;
 function renderCats(){
   const counts = {};
   PRODUCTS.forEach(p => p.cats.forEach(c => counts[c] = (counts[c] || 0) + 1));
@@ -1871,7 +1871,7 @@ const GROUPS = [
 const grpOf = k => k && k[0] === "@" ? GROUPS.find(g => g[0] === k.slice(1)) : null;
 const inCur = p => { if (current === "all") return true; const g = grpOf(current); return g ? g[2].some(c => p.cats.includes(c)) : p.cats.includes(current); };
 const curLabel = () => { const g = grpOf(current); return g ? g[0] : current; };
-const tnPic = k => CAT_PICS.has(k) ? `<img src="images/cat/${k}.webp" alt="" loading="lazy" width="24" height="24">` : "";
+const tnPic = k => CAT_PICS.has(k) ? `<img src="./${k}.webp" alt="" loading="lazy" width="24" height="24">` : "";
 function renderTopnav(){
   const counts = {}; PRODUCTS.forEach(p => p.cats.forEach(c => counts[c] = (counts[c] || 0) + 1));
   const cv = `<svg class="cv" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>`;
@@ -1879,7 +1879,7 @@ function renderTopnav(){
   GROUPS.forEach(([name, ic, cats]) => {
     const single = cats.length === 1, key = single ? cats[0] : "@" + name;
     const on = current === key || (!single && cats.includes(current));
-    const items = cats.map(c => { const n = counts[c] || 0; return `<button class="${n ? "" : "none"}" onclick="setCat('${jsq(c)}',true)">${CAT_PICS.has(catSlug(c)) ? `<img src="images/cat/${catSlug(c)}.webp" alt="" loading="lazy">` : ""}<span>${esc(c)}<em>${n ? n + (n === 1 ? " item" : " items") : "Coming soon"}</em></span></button>`; }).join("");
+    const items = cats.map(c => { const n = counts[c] || 0; return `<button class="${n ? "" : "none"}" onclick="setCat('${jsq(c)}',true)">${CAT_PICS.has(catSlug(c)) ? `<img src="./${catSlug(c)}.webp" alt="" loading="lazy">` : ""}<span>${esc(c)}<em>${n ? n + (n === 1 ? " item" : " items") : "Coming soon"}</em></span></button>`; }).join("");
     html.push(`<div class="tn"><button class="tb ${on ? "on" : ""}" onclick="setCat('${jsq(key)}',true)">${tnPic(ic)}${esc(name)}${single ? "" : cv}</button>${single ? "" : `<div class="mega">${items}<button class="mall" onclick="setCat('${jsq(key)}',true)">View all ${esc(name)} →</button></div>`}</div>`);
   });
   $("#topnav").innerHTML = html.join("");
