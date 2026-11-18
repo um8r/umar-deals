@@ -1509,7 +1509,7 @@ function goSlide(i, user){
 
 /* ---------- categories ---------- */
 /* category pictures (images/cat/<name>.webp); a category without a picture keeps its line icon */
-const CAT_PICS = new Set(["all", "shoes", "bags", "bedding", "books-stationery", "car-bike", "cosmetics", "electronic-accessories", "electronics", "fashion-accessories", "festive-collection", "fitness", "home-decor", "home-essentials", "home-linen", "islamic-accessories", "jewellery", "kid-accessories", "kids-clothing", "kitchenware", "men-s-shawls", "men-stitched", "men-undergarments", "men-unstitched", "mobile-gadgets", "mother-baby", "other", "perfumes", "watches", "winter", "women-handbags", "women-s-shawls", "women-undergarments", "women-unstitched"]);
+const CAT_PICS = new Set(["all", "women-stitched", "shoes", "bags", "bedding", "books-stationery", "car-bike", "cosmetics", "electronic-accessories", "electronics", "fashion-accessories", "festive-collection", "fitness", "home-decor", "home-essentials", "home-linen", "islamic-accessories", "jewellery", "kid-accessories", "kids-clothing", "kitchenware", "men-s-shawls", "men-stitched", "men-undergarments", "men-unstitched", "mobile-gadgets", "mother-baby", "other", "perfumes", "watches", "winter", "women-handbags", "women-s-shawls", "women-undergarments", "women-unstitched"]);
 const catSlug = k => String(k).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 let CAT_PHOTO = {}, CAT_BANNER = {};
 async function loadCatInfo(){
@@ -1523,7 +1523,8 @@ async function loadCatInfo(){
 }
 /* picture for a category: your sheet photo first, then the designed icon, then the line icon */
 const catImgSrc = k => CAT_PHOTO[k] ? imgUrl(CAT_PHOTO[k]) : CAT_PICS.has(catSlug(k)) ? `images/cat/${catSlug(k)}.webp` : "";
-const catIco = k => CAT_PHOTO[k] ? `<span class="circ pic photo"><img src="${esc(imgUrl(CAT_PHOTO[k]))}" alt="" loading="lazy"></span>` : CAT_PICS.has(catSlug(k)) ? `<span class="circ pic"><img src="images/cat/${catSlug(k)}.webp" data-k="${esc(k)}" alt="" loading="lazy" width="160" height="160"></span>` : `<span class="circ">${icon(k)}</span>`;
+const CAT_FULL = new Set(["bags", "home-essentials", "home-linen", "mother-baby", "electronic-accessories", "watches", "books-stationery", "women-undergarments", "men-undergarments", "other"]);
+const catIco = k => CAT_PHOTO[k] ? `<span class="circ pic photo"><img src="${esc(imgUrl(CAT_PHOTO[k]))}" alt="" loading="lazy"></span>` : CAT_PICS.has(catSlug(k)) ? `<span class="circ pic${CAT_FULL.has(catSlug(k)) ? " photo" : ""}"><img src="images/cat/${catSlug(k)}.webp" data-k="${esc(k)}" alt="" loading="lazy" width="160" height="160"></span>` : `<span class="circ">${icon(k)}</span>`;
 function renderCats(){
   const counts = {};
   PRODUCTS.forEach(p => p.cats.forEach(c => counts[c] = (counts[c] || 0) + 1));
