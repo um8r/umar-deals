@@ -1351,12 +1351,15 @@ const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt
 const jsq = s => esc(s).replace(/\\/g, "\\\\").replace(/'/g, "\\'");
 const rs = n => "Rs. " + Number(n || 0).toLocaleString("en-PK");
 const driveId = s => { const m = String(s || "").match(/(?:drive|docs)\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=|thumbnail\?id=)([-\w]{20,})/); return m ? m[1] : ""; };
-const imgUrl = s => { s = String(s || "").trim(); if (!s) return "images/logo.png"; const id = driveId(s); if (id) return "https://lh3.googleusercontent.com/d/" + id; return /^https?:\/\//i.test(s) ? s : "images/" + s; };
+const imgUrl = (s, original) => { s = String(s || "").trim(); if (!s) return "images/logo.png"; const id = driveId(s); if (id) return "https://lh3.googleusercontent.com/d/" + id; s = /^https?:\/\//i.test(s) ? s : "images/" + s;
+  /* product photos in img/ also have a lighter .webp copy (same name); the page falls back to .jpg if it is missing */
+  return (!original && /(^|\/)img\/[a-z]+\/[a-z]+-\d+\.jpg$/i.test(s)) ? s.replace(/\.jpg$/i, ".webp") : s; };
 /* if a Drive image fails on lh3, try Drive's thumbnail link once, then the logo */
 document.addEventListener("error", e => {
   const im = e.target; if (!im || im.tagName !== "IMG") return;
   if (im.dataset.k !== undefined){ const sp = document.createElement("span"); sp.className = "fbico"; sp.innerHTML = icon(im.dataset.k); im.replaceWith(sp); return; }
   /* product photos live in img/<prefix>/ (e.g. img/ug/ug-020.jpg); older ones may still be in the root: try the other place once */
+  { const sw = im.getAttribute("src") || ""; if (!im.dataset.wb && /\/?img\/[a-z]+\/[^\/?#]+\.webp$/i.test(sw)){ im.dataset.wb = 1; im.src = sw.replace(/\.webp$/i, ".jpg"); return; } }
   if (!im.dataset.mv){ const s0 = im.getAttribute("src") || ""; let p = s0.match(/^(.*?\/|)img\/[a-z]+\/([a-z]+-\d+[^\/?#]*)$/);
     if (p){ im.dataset.mv = 1; im.src = p[1] + p[2]; return; }
     p = s0.match(/^(https:\/\/umar-deals\.pages\.dev\/|\.\/|)(([a-z]+)-\d+[^\/?#]*\.(?:jpe?g|png|webp))$/i);
@@ -1422,6 +1425,111 @@ async function getCSV(url, backup){
   }
   throw new Error("csv");
 }
+/* ---------- product facts (from the product name/category; the sheet always wins) ---------- */
+/* Description: drop the product name when the text just repeats it */
+function cleanDesc(d, name){
+  d = String(d || "").trim();
+  if (name && d.toLowerCase().startsWith(name.toLowerCase() + ".")) d = d.slice(name.length + 1).trim();
+  return d;
+}
+const UNSTITCHED_RE = /unstitched|\bfabric\b/i;
+function yearSteps(a, b){
+  const out = [], step = (b - a) > 6 ? 2 : 1;
+  for (let y = a; y < b; y += step) out.push(`${y}-${Math.min(y + step, b)} Years`);
+  return out.length ? out : [`${a}-${b} Years`];
+}
+/* Sizes to offer when the sheet's "sizes" column is empty. Only for things you wear. */
+function autoSizes(p){
+  const n = " " + (p.en || p.name || "").toLowerCase() + " ", cats = p.cats, subs = p.subs;
+  const has = c => cats.includes(c), sub = s => subs.includes(s);
+  const wearCats = ["Women Stitched","Men Stitched","Kids Clothing","Women Undergarments","Men Undergarments","Shoes"];
+  const wearWinter = ["Hoodies & Sweatshirts","Jackets & Cardigans","Fleece Trousers","Women Winter Wear","Kids Winter Wear","Socks & Thermals"];
+  const isWear = cats.some(c => wearCats.includes(c)) || (has("Winter") && subs.some(s => wearWinter.includes(s))) || (has("Fitness") && sub("Sports Wear"));
+  if (!isWear || UNSTITCHED_RE.test(n) || sub("Women Care") || cats.some(c => /Unstitched|Shawls/.test(c))) return [];
+  if (/free size|one size/.test(n)) return ["Free Size"];
+  if (has("Winter") && !cats.some(c => wearCats.includes(c)) && /sock|cap|glove|muffler|beanie/.test(n)) return [];
+  /* kids */
+  const kid = has("Kids Clothing") || sub("Kids Winter Wear") || sub("Kids Shoes");
+  if (kid && !has("Shoes")){
+    let m = n.match(/(\d{1,2})\s*-\s*(\d{1,2})\s*months?/); if (m) return [`${m[1]}-${m[2]} Months`];
+    m = n.match(/(\d{1,2})\s*-\s*(\d{1,2})\s*(?:y|yr|yrs|year|years)\b/); if (m && +m[2] > +m[1]) return yearSteps(+m[1], +m[2]);
+    m = n.match(/\b(\d{2,3})\s*cm\b/); if (m) return [`${m[1]} cm`];
+    return ["1-2 Years","3-4 Years","5-6 Years","7-8 Years","9-10 Years"];
+  }
+  /* shoes */
+  if (has("Shoes")){
+    if (sub("Kids Shoes") || /\b(kids?|boys?|baby|child)\b/.test(n)) return ["26","28","30","32","34"];
+    if (subs.some(s => /^Women|Heels/.test(s)) || /\b(women|ladies|girls?|female)\b/.test(n)) return ["36","37","38","39","40","41"];
+    if (/\bmen\b|\bmen's\b|\bboys\b|\bgents\b/.test(n) || sub("Men Shoes")) return ["39","40","41","42","43","44"];
+    return ["37","38","39","40","41","42","43","44"];
+  }
+  /* bras: band sizes */
+  if (sub("Bras")){
+    const m = n.match(/\b(2[8-9]|3\d|4[0-8])\s*-\s*(3\d|4[0-8])\b/);
+    if (m){ const out = []; for (let s = +m[1]; s <= +m[2]; s += 2) out.push(String(s)); return out; }
+    return ["32","34","36","38","40"];
+  }
+  /* sizes written in the name */
+  const L = ["S","M","L","XL","XXL","3XL"];
+  const span = (a, b) => L.slice(L.indexOf(a), L.indexOf(b) + 1);
+  if (/\bs\s*-\s*3xl\b/.test(n)) return span("S","3XL");
+  if (/\bs\s*-\s*(xxl|2xl)\b/.test(n)) return span("S","XXL");
+  if (/small to xl/.test(n)) return span("S","XL");
+  if (/medium to xl/.test(n)) return span("M","XL");
+  if (/\bm l xl\b/.test(n)) return span("M","XL");
+  if (/\bs m l\b/.test(n)) return span("S","L");
+  if (/\bm l\b/.test(n)) return ["M","L"];
+  let m = n.match(/\b(xxl|xl)\b/); if (m && !/plus size/.test(n)) return [m[1].toUpperCase()];
+  if (/\blarge\s*$/.test(n.trim())) return ["L"];
+  if (/\bmedium\s*$/.test(n.trim())) return ["M"];
+  /* defaults by category */
+  if (sub("Panties")) return ["M","L","XL"];
+  if (sub("Thermals") || sub("Socks & Thermals")) return ["M","L","XL"];
+  if (has("Women Undergarments") || has("Women Stitched") || sub("Women Winter Wear")) return ["S","M","L","XL"];
+  return ["M","L","XL","XXL"];   /* men's wear */
+}
+const FABRICS = ["lawn","chiffon","organza","khaddar","karandi","dhanak","marina","linen","cotton","katan silk","ice silk","shamoz silk","silk","velvet","wool","fleece","jersey","net","crepe","malai","bareeza","leather","denim","corduroy","satin","lycra","spandex","polyester","nylon","cashmere","pashmina","terry","dobby","chikankari","jacquard","acrylic","stainless steel","abs"];
+const COLOURS = ["off-white","sky blue","navy blue","black","white","red","maroon","pink","peach","purple","lavender","blue","navy","green","olive","teal","turquoise","yellow","mustard","orange","brown","beige","khaki","grey","gray","cream","fuchsia","multicolor","multicolour"];
+const cap = s => s.replace(/\b\w/g, c => c.toUpperCase());
+function findAll(n, words){
+  const out = []; let t = " " + n + " ";
+  words.forEach(w => { const re = new RegExp("[^a-z]" + w.replace(/[-\s]/g, "[-\\s]") + "[^a-z]"); if (re.test(t)){ out.push(w); t = t.replace(re, " "); } });
+  return out;
+}
+/* Short "facts" list for the product page, built only from what the name and category say */
+function autoFacts(p){
+  const n = (p.en || p.name || "").toLowerCase(), f = [];
+  const wear = p.sizes.length || p.cats.some(c => /Stitched|Unstitched|Shawls|Undergarments|Clothing/.test(c));
+  const fab = findAll(n, FABRICS).filter(x => wear || ["stainless steel","abs","leather","silicone"].includes(x));
+  if (fab.length) f.push(["Material", fab.map(x => x === "abs" ? "ABS plastic" : cap(x)).join(", ")]);
+  let m = n.match(/(\d)\s*-?\s*(?:pcs?|pieces?)\b/);
+  if (m && p.cats.some(c => /Stitched|Unstitched/.test(c))){
+    const k = +m[1];
+    f.push(["Pieces", k === 3 ? "3 pieces: shirt, trouser and dupatta" : k === 2 ? (/dupatta/.test(n) ? "2 pieces: shirt and dupatta" : "2 pieces: shirt and trouser") : k === 1 ? "1 piece: shirt only" : `${k} pieces`]);
+  } else if ((m = n.match(/pack of (\d+)|(\d+)\s*-?\s*pack\b|(\d+)\s*pairs?\b/))){
+    f.push(["In the pack", (m[1] || m[2] || m[3]) + " pieces"]);
+  }
+  const col = findAll(n, COLOURS).map(c => c === "gray" ? "grey" : c);
+  if (col.length) f.push(["Colour", [...new Set(col)].map(cap).join(" / ") + " (as shown in the photo)"]);
+  if (p.sizes.length) f.push(["Sizes", p.sizes.join(", ")]);
+  const fs = fab.join(" ");
+  if (p.cats.some(c => /Undergarments/.test(c))) f.push(["Care", "Hand wash in cold water. Do not bleach. Packed discreetly."]);
+  else if (/wool|fleece|cashmere|pashmina|velvet/.test(fs) || p.cats.some(c => /Shawls/.test(c))) f.push(["Care", "Hand wash in cold water or dry clean. Dry flat in the shade."]);
+  else if (/chiffon|organza|net|silk|crepe|satin|bareeza/.test(fs)) f.push(["Care", "Dry clean or gentle hand wash in cold water. Iron on low heat."]);
+  else if (wear && /lawn|cotton|linen|khaddar|karandi|dhanak|marina|jersey|terry|dobby|polyester|lycra|denim/.test(fs)) f.push(["Care", "Hand wash or gentle machine wash in cold water. Iron on medium heat."]);
+  if (!wear){
+    const spec = (n.match(/\b\d+(?:\.\d+)?\s?(?:mah|kg|g|ml|l|w|v|inch|cm|mm|digit|pcs?|piece|liter|litre)\b/g) || []).slice(0, 4);
+    const feat = ["rechargeable","portable","foldable","waterproof","wireless","bluetooth","lcd","led","usb","adjustable","fast charging","stainless steel","non-stick","automatic","digital"].filter(w => n.includes(w));
+    const all = [...new Set([...spec.map(s => s.replace(/\s+/g, " ")), ...feat])];
+    if (all.length) f.push(["Features", all.map(x => /^[a-z]/.test(x) && x.length <= 3 ? x.toUpperCase() : cap(x)).join(" · ")]);
+  }
+  const subs = p.subs.join(" ");
+  if (/Wedding|Eid|Party/.test(subs)) f.push(["Good for", "Eid, weddings and parties"]);
+  else if (/Night/.test(subs)) f.push(["Good for", "Sleeping and relaxing at home"]);
+  else if (/Sports Wear|Gym/.test(subs)) f.push(["Good for", "Gym, walking and sports"]);
+  else if (p.cats.includes("Winter")) f.push(["Good for", "Cold weather"]);
+  return f;
+}
 async function loadProducts(){
   try {
     PRODUCTS = parseCSV(await getCSV(CONFIG.SHEET_CSV_URL, "products.csv"))
@@ -1434,13 +1542,15 @@ async function loadProducts(){
         price: num(p.price), old: num(p.old_price),
         sizes: list(p.sizes), colors: list(p.colors),
         images: String(p.images || p.image || "").split("|").map(s => s.trim()).filter(Boolean),
-        desc: (LANG === "ur" && p.description_ur) ? p.description_ur : (p.description || ""),
+        en: p.name || "",
+        desc: (LANG === "ur" && p.description_ur) ? p.description_ur : cleanDesc(p.description || "", p.name || ""),
         tags: list(p.tags).map(t => t.toLowerCase()),
         chart: (p.size_chart || "").trim(),
         sold: (p.status || "").toLowerCase().replace(/\s/g, "") === "soldout",
         deal: (p.deal || "").toLowerCase().trim(), ends: parseEnd(p.deal_ends), stock: (p.stock || "").trim() === "" ? null : num(p.stock),
         order: i
       }));
+    PRODUCTS.forEach(p => { if (!p.sizes.length) p.sizes = autoSizes(p); p.facts = autoFacts(p); });
   } catch (e) {
     $("#grid").innerHTML = '<div class="empty">Products could not be loaded. Please check your internet and reload the page.</div>';
     return;
@@ -1693,7 +1803,7 @@ function card(p, opt){
   const c = jsq(p.code);
   return `<div class="card ${p.sold ? "sold-out" : ""}">
     <button class="heart ${WISH.includes(p.code) ? "on" : ""}" onclick="toggleWish('${c}',this)" aria-label="Wishlist">${HEART}</button>
-    ${opt && opt.dl ? `<a class="dlc" href="${esc(imgUrl(p.images[0]))}" download="${esc(dlName(p))}" aria-label="Download photo" title="Download photo">${DL}</a>` : ""}
+    ${opt && opt.dl ? `<a class="dlc" href="${esc(imgUrl(p.images[0], true))}" download="${esc(dlName(p))}" aria-label="Download photo" title="Download photo">${DL}</a>` : ""}
     <button class="ph" onclick="openProduct('${c}')" aria-label="${esc(p.name)}">
       <img src="${esc(imgUrl(p.images[0]))}" alt="${esc(p.name)}" loading="lazy" onload="if(this.naturalWidth>this.naturalHeight*1.15)this.classList.add('wd')">
       <span class="badges">${p.sold ? '<span class="badge sold">Sold Out</span>' : ""}${!p.sold && off ? `<span class="badge off">${off}% OFF</span>` : ""}${!p.sold && p.tags.includes("top") ? '<span class="badge top">⭐ Top Pick</span>' : ""}</span>
@@ -2087,7 +2197,7 @@ function drawModal(p){
           <div class="pacts">
             <a target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(shareText)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="M8.2 10.8l7.6-4.4M8.2 13.2l7.6 4.4"/></svg>Share</a>
             <button onclick="copyLink('${jsq(p.code)}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1"/></svg>Link</button>
-            <a href="${esc(imgUrl(imgs[sel.img]))}" download="${esc(dlName(p))}">${DL}Photo</a>
+            <a href="${esc(imgUrl(imgs[sel.img], true))}" download="${esc(dlName(p))}">${DL}Photo</a>
             <a target="_blank" rel="noopener" href="${waLink("Hi! I would like to ask about: " + p.name + " (" + p.code + ")")}"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.6 15.1L2 22l5-1.3A10 10 0 1012 2zm5.2 14.1c-.2.6-1.3 1.2-1.8 1.2s-1 .3-3.4-.7a11.6 11.6 0 01-4.6-4.1 5.2 5.2 0 01-1.1-2.8 3 3 0 011-2.2 1 1 0 01.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1a.6.6 0 010 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6a8.6 8.6 0 001.6 2 7.8 7.8 0 002.3 1.4c.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3a2.3 2.3 0 01-.2 1.4z"/></svg>Ask</a>
           </div>
         </div>
@@ -2102,8 +2212,8 @@ function drawModal(p){
           <div class="pbox seller"><span class="plogo">UD</span><div><b>Umar Deals Pakistan</b><p>WhatsApp: 0317-1897804</p></div></div>
         </aside>
       </div>
-      ${p.desc ? `<section class="pdesc"><h3>Product details</h3><p>${esc(p.desc)}</p>
-        <ul><li>Product code: <b>${esc(p.code)}</b></li><li>Category: ${esc(p.cats.join(", "))}${p.subs.length ? " › " + esc(p.subs.join(", ")) : ""}</li>${p.sizes.length ? `<li>Sizes: ${esc(p.sizes.join(", "))}</li>` : ""}${p.colors.length ? `<li>Colours / designs: ${esc(p.colors.join(", "))}</li>` : ""}</ul></section>` : ""}
+      <section class="pdesc"><h3>Product details</h3>${p.desc ? `<p>${esc(p.desc)}</p>` : ""}
+         <ul>${p.facts.map(([k, v]) => `<li>${esc(k)}: <b>${esc(v)}</b></li>`).join("")}<li>Product code: <b>${esc(p.code)}</b></li><li>Category: ${esc(p.cats.join(", "))}${p.subs.length ? " › " + esc(p.subs.join(", ")) : ""}</li>${p.colors.length ? `<li>Colours / designs: ${esc(p.colors.join(", "))}</li>` : ""}<li>Payment: <b>Cash on Delivery</b> (no advance payment)</li></ul></section>
     </div>
     ${relatedHTML(p)}`;
   bindSwipe();
