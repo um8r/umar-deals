@@ -42,6 +42,7 @@ a{color:inherit;text-decoration:none}
 .wrap{max-width:1340px;margin:0 auto;padding:0 16px}
 .hide{display:none!important}
 
+.seo-about h1{font-size:22px;line-height:1.3;color:var(--green);margin-bottom:8px}.seo-about p{color:var(--muted);font-size:14px;margin-bottom:8px}.seo-links{display:flex;flex-wrap:wrap;gap:8px}.seo-links a{background:var(--mint);color:var(--green);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:500}
 /* top strip */
 .strip{background:var(--green-3);color:#E7F3EC;font-size:13px;overflow:hidden;height:34px}
 .strip-track{display:flex;flex-direction:column;transition:transform .5s ease}
@@ -1050,6 +1051,13 @@ html[dir=rtl] .mega button{text-align:right}
     </div>
   </section>
 
+  <section class="panel seo-about" id="aboutPanel">
+    <h1>Umar Deals Pakistan: Online Shopping with Cash on Delivery</h1>
+    <p>Umar Deals Pakistan is an online store where you can buy clothing, winter wear, kids' items, handbags, kitchen and home products, electronics and much more in one place. Every order is <b>Cash on Delivery</b>: you pay only when the parcel reaches your door, with no advance payment. We deliver to every city in Pakistan in 3-5 days, including Lahore, Karachi, Islamabad, Rawalpindi, Faisalabad, Multan and Peshawar, and wrong or damaged items can be returned within 7 days.</p>
+    <p>Browse by category:</p>
+    <div class="seo-links"><a href="/c/women-stitched">Women Stitched</a><a href="/c/men-stitched">Men Stitched</a><a href="/c/kids-clothing">Kids Clothing</a><a href="/c/winter">Winter</a><a href="/c/kitchenware">Kitchenware</a><a href="/c/fashion-accessories">Fashion Accessories</a><a href="/c/cosmetics">Cosmetics</a><a href="/c/perfumes">Perfumes</a><a href="/c/jewellery">Jewellery</a><a href="/c/women-unstitched">Women Unstitched</a><a href="/c/men-unstitched">Men Unstitched</a><a href="/c/women-handbags">Women Handbags</a><a href="/c/festive-collection">Festive Collection</a><a href="/c/women-s-shawls">Women&#x27;s Shawls</a><a href="/c/men-s-shawls">Men&#x27;s Shawls</a><a href="/c/shoes">Shoes</a><a href="/c/bags">Bags</a><a href="/c/kid-accessories">Kid Accessories</a><a href="/c/home-essentials">Home Essentials</a><a href="/c/home-decor">Home Decor</a><a href="/c/home-linen">Home Linen</a><a href="/c/mother-baby">Mother &amp; Baby</a><a href="/c/islamic-accessories">Islamic Accessories</a><a href="/c/car-bike">Car &amp; Bike</a><a href="/c/mobile-gadgets">Mobile &amp; Gadgets</a><a href="/c/electronic-accessories">Electronic Accessories</a><a href="/c/electronics">Electronics</a><a href="/c/watches">Watches</a><a href="/c/fitness">Fitness</a><a href="/c/books-stationery">Books &amp; Stationery</a><a href="/c/women-undergarments">Women Undergarments</a><a href="/c/men-undergarments">Men Undergarments</a><a href="/c/other">Other</a><a href="/c/wall-clocks">Wall Clocks</a></div>
+  </section>
+
   <section class="panel" id="faqPanel">
     <div class="sec-head"><h2>Frequently asked questions</h2></div>
     <div class="faq" id="faq"></div>
@@ -1390,7 +1398,9 @@ const BASE_TITLE = document.title, BASE_DESC = (document.querySelector('meta[nam
 function setMeta(title, desc, path){
   document.title = title;
   const d = document.querySelector('meta[name="description"]'); if (d) d.content = desc;
-  const c = document.querySelector('link[rel="canonical"]'); if (c) c.href = SITE + (path || "");
+  const c = document.querySelector('link[rel="canonical"]');
+  if (c){ const pm = /^\?p=(.+)$/.exec(path || ""), cm = /^\?c=(.+)$/.exec(path || "");
+    c.href = pm ? SITE + "p/" + pm[1] : cm ? SITE + "c/" + catSlug(decodeURIComponent(cm[1])) : SITE + (path || ""); }
   try { history.replaceState(null, "", location.pathname + (path || "")); } catch (e) {}
 }
 function catMeta(){
@@ -1602,7 +1612,7 @@ function renderSlides(){
     const p = PRODUCTS.find(x => x.code === s.product);
     const imgs = String(s.image || "").split("|").map(x => x.trim()).filter(Boolean).map(imgUrl);
     const img = imgs[0] || (p ? imgUrl(p.images[0]) : "");
-    const H = i === 0 ? "h1" : "h2";
+    const H = "h2";
     const go = s.cat && s.cat !== "all" ? `setCat('${jsq(s.cat)}',true)` : `setCat('all',true)`;
     let media = "";
     if (s.video) media = `<div class="pic vid"><video src="${esc(s.video)}" muted loop playsinline autoplay preload="metadata"${img ? ` poster="${esc(img)}"` : ""}></video>${p ? `<span class="tag">${rs(p.price)}</span>` : ""}</div>`;
