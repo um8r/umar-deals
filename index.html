@@ -15,7 +15,7 @@
 <link rel="canonical" href="https://umar-deals.pages.dev/">
 <meta name="robots" content="index, follow">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"OnlineStore","name":"Umar Deals Pakistan","alternateName":"Umar Deals","url":"https://umar-deals.pages.dev/","logo":"https://umar-deals.pages.dev/images/logo.png","image":"https://umar-deals.pages.dev/og-image.jpg","description":"Online shopping in Pakistan: fashion, kids, kitchen, winter, car and mobile products with Cash on Delivery.","areaServed":"PK","telephone":"+92-317-1897804","email":"umardealspak@gmail.com","sameAs":["https://www.instagram.com/umardealspakistan","https://www.tiktok.com/@udpkdeals","https://whatsapp.com/channel/0029Vb9SFQMBVJl9wtzfLP3H"]}
+{"@context":"https://schema.org","@type":"OnlineStore","name":"Umar Deals Pakistan","alternateName":"Umar Deals","url":"https://umar-deals.pages.dev/","logo":"https://umar-deals.pages.dev/images/logo.png","image":"https://umar-deals.pages.dev/og-image.jpg","description":"Online shopping in Pakistan: fashion, kids, kitchen, winter, car and mobile products with Cash on Delivery.","areaServed":"PK","telephone":"+92-317-1897804","email":"umardealspak@gmail.com","sameAs":["https://www.instagram.com/umardealspakistan","https://www.tiktok.com/@udpkdeals","https://whatsapp.com/channel/0029Vb9SFQMBVJl9wtzfLP3H","https://www.facebook.com/profile.php?id=61596163422622"]}
 </script>
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0A4D36">
@@ -1205,7 +1205,7 @@ const CONFIG = {
     instagram: "https://www.instagram.com/umardealspakistan",
     tiktok:    "https://www.tiktok.com/@udpkdeals",
     whatsappChannel: "https://whatsapp.com/channel/0029Vb9SFQMBVJl9wtzfLP3H",
-    facebook:  "https://www.facebook.com/search/top?q=Umar%20Deals%20Pakistan", // put your Facebook Page link here
+    facebook:  "https://www.facebook.com/profile.php?id=61596163422622",
   },
 
   // BANNERS: Publish-to-web (CSV) link of the "Banners" sheet tab. Empty = use banners.csv
@@ -2369,7 +2369,7 @@ function renderVideos(){
     return `<div class="vid"><video src="${esc(v.src)}" ${v.poster ? `poster="${esc(v.poster)}"` : ""} muted loop playsinline preload="none" onclick="this.paused?this.play():this.pause()"></video>
       ${p ? `<div class="vb"><span>${esc(p.name)}</span><b>${rs(p.price)}</b><button onclick="openProduct('${jsq(p.code)}')">View product</button></div>` : ""}</div>`;
   }).join("");
-  $("#follow").innerHTML = (CONFIG.LINKS.whatsappChannel ? `<a class="btn btn-line" href="${esc(CONFIG.LINKS.whatsappChannel)}" target="_blank" rel="noopener">📢 Join WhatsApp Channel</a>` : "") + `<a class="btn btn-line" href="${esc(CONFIG.LINKS.instagram)}" target="_blank" rel="noopener">📸 Follow on Instagram</a><a class="btn btn-line" href="${esc(CONFIG.LINKS.tiktok)}" target="_blank" rel="noopener">🎵 Follow on TikTok</a>`;
+  $("#follow").innerHTML = (CONFIG.LINKS.whatsappChannel ? `<a class="btn btn-line" href="${esc(CONFIG.LINKS.whatsappChannel)}" target="_blank" rel="noopener">📢 Join WhatsApp Channel</a>` : "") + `<a class="btn btn-line" href="${esc(CONFIG.LINKS.instagram)}" target="_blank" rel="noopener">📸 Follow on Instagram</a><a class="btn btn-line" href="${esc(CONFIG.LINKS.facebook)}" target="_blank" rel="noopener">👍 Like on Facebook</a><a class="btn btn-line" href="${esc(CONFIG.LINKS.tiktok)}" target="_blank" rel="noopener">🎵 Follow on TikTok</a>`;
   if ("IntersectionObserver" in window){
     const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.play().catch(() => {}); else e.target.pause(); }), {threshold: .6});
     $$("#vids video").forEach(v => io.observe(v));
