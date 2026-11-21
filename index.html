@@ -1590,7 +1590,14 @@ const varsOf = p => (p && p.group && VARS[p.group]) || null;
 function collapseGroups(arr){ const seen = new Set(); return arr.filter(p => { const g = varsOf(p) && p.group; if (!g) return true; if (seen.has(g)) return false; seen.add(g); return true; }); }
 async function loadProducts(refresh){
   try {
-    PRODUCTS = parseCSV(await getCSVQuick(CONFIG.SHEET_CSV_URL, "products.csv"))
+    const getJ = u => fetch(u).then(r => r.ok ? r.json() : {}).catch(() => ({}));
+    const xd = getJ("extra_desc.json"), xu = LANG === "ur" ? getJ("extra_ur.json") : Promise.resolve({});
+    const rawP = parseCSV(await getCSVQuick(CONFIG.SHEET_CSV_URL, "products.csv"));
+    /* newer descriptions / Urdu names kept in the site files: used only while the sheet still has the old text or no Urdu name */
+    const [XD, XU] = await Promise.all([xd, xu]);
+    const h32 = s => { let h = 0x811c9dc5; for (let i = 0; i < s.length; i++){ h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h >>> 0; };
+    rawP.forEach(p => { const d = XD[p.code]; if (d && h32((p.description || "").trim()) === d[0]) p.description = d[1]; if (!(p.name_ur || "").trim() && XU[p.code]) p.name_ur = XU[p.code]; });
+    PRODUCTS = rawP
       .filter(p => p.name && (p.status || "active").toLowerCase() !== "hidden")
       .map((p, i) => ({
         code: p.code || ("P-" + (i + 1)),
