@@ -2843,6 +2843,10 @@ if (CONFIG.ANALYTICS_TOKEN){
   const sc = document.createElement("script"); sc.defer = true; sc.src = "https://static.cloudflareinsights.com/beacon.min.js";
   sc.setAttribute("data-cf-beacon", JSON.stringify({token: CONFIG.ANALYTICS_TOKEN})); document.head.appendChild(sc);
 }
+/* faster taps: when a button is clicked, let the phone show the tap first, then do the heavy work (redrawing products or opening a product) */
+const deferOnTap = f => function(...a){ const ev = window.event; if (ev && ev.type === "click"){ requestAnimationFrame(() => setTimeout(() => f.apply(this, a), 0)); return; } return f.apply(this, a); };
+setCat = deferOnTap(setCat); openProduct = deferOnTap(openProduct); pickSub = deferOnTap(pickSub);
+showSection = deferOnTap(showSection); goPage = deferOnTap(goPage); cardGo = deferOnTap(cardGo);
 applyLang(); init(); updateCount(); updateWish(); loadProducts();
 </script>
 </body>
