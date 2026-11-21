@@ -21,7 +21,9 @@
 <meta name="theme-color" content="#0A4D36">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://lh3.googleusercontent.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
 <style>
 :root{
   --green:#0A4D36; --green-2:#127552; --green-3:#05301F; --mint:#EAF4EE;
@@ -1352,7 +1354,7 @@ const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt
 const jsq = s => esc(s).replace(/\\/g, "\\\\").replace(/'/g, "\\'");
 const rs = n => "Rs. " + Number(n || 0).toLocaleString("en-PK");
 const driveId = s => { const m = String(s || "").match(/(?:drive|docs)\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=|thumbnail\?id=)([-\w]{20,})/); return m ? m[1] : ""; };
-const imgUrl = (s, original) => { s = String(s || "").trim(); if (!s) return "images/logo.png"; const id = driveId(s); if (id) return "https://lh3.googleusercontent.com/d/" + id; s = /^https?:\/\//i.test(s) ? s : "images/" + s;
+const imgUrl = (s, original) => { s = String(s || "").trim(); if (!s) return "images/logo.png"; const id = driveId(s); if (id) return "https://lh3.googleusercontent.com/d/" + id + (original ? "" : "=w1000"); s = /^https?:\/\//i.test(s) ? s : "images/" + s;
   /* product photos in img/ also have a lighter .webp copy (same name); the page falls back to .jpg if it is missing */
   return (!original && /(^|\/)img\/[a-z]+\/[a-z]+-\d+\.jpg$/i.test(s)) ? s.replace(/\.jpg$/i, ".webp") : s; };
 /* if a Drive image fails on lh3, try Drive's thumbnail link once, then the logo */
@@ -1425,6 +1427,20 @@ async function getCSV(url, backup){
     try { const r = await fetch(u, {cache: "no-store"}); if (!r.ok) continue; const t = await r.text(); if (t.trim() && !/^\s*</.test(t)) return t; } catch (e) {}
   }
   throw new Error("csv");
+}
+/* fast first paint: show the last saved copy (or the site's own CSV file) at once,
+   then check the Google Sheet in the background and refresh the page data if the sheet changed */
+const CSV_LIVE = []; let CSV_REFRESH = false;
+const csvOk = x => x && x.trim() && !/^\s*</.test(x) ? x : null;
+async function getCSVQuick(url, backup){
+  const key = "ud_csv_" + backup; let t = null;
+  try { t = localStorage.getItem(key); } catch (e) {}
+  if (CSV_REFRESH && t) return t;
+  const live = url ? fetch(url, {cache: "no-store"}).then(r => r.ok ? r.text() : null).then(csvOk).catch(() => null) : Promise.resolve(null);
+  if (!t){ try { const r = await fetch(backup, {cache: "no-cache"}); if (r.ok) t = csvOk(await r.text()); } catch (e) {} }
+  if (!t){ t = await live; if (!t) throw new Error("csv"); try { localStorage.setItem(key, t); } catch (e) {} return t; }
+  CSV_LIVE.push(live.then(x => { if (!x) return false; try { localStorage.setItem(key, x); } catch (e) {} return x !== t; }));
+  return t;
 }
 /* ---------- product facts (from the product name/category; the sheet always wins) ---------- */
 /* Description: drop the product name when the text just repeats it */
@@ -1531,9 +1547,9 @@ function autoFacts(p){
   else if (p.cats.includes("Winter")) f.push(["Good for", "Cold weather"]);
   return f;
 }
-async function loadProducts(){
+async function loadProducts(refresh){
   try {
-    PRODUCTS = parseCSV(await getCSV(CONFIG.SHEET_CSV_URL, "products.csv"))
+    PRODUCTS = parseCSV(await getCSVQuick(CONFIG.SHEET_CSV_URL, "products.csv"))
       .filter(p => p.name && (p.status || "active").toLowerCase() !== "hidden")
       .map((p, i) => ({
         code: p.code || ("P-" + (i + 1)),
@@ -1560,7 +1576,11 @@ async function loadProducts(){
   /* a category's "All" sub-photo becomes its logo everywhere (unless the Categories sheet has its own photo) */
   Object.keys(SUB_PHOTOS).forEach(k => { const [c, sb] = k.split("||"); if (sb === "All" && c !== "*" && !CAT_PHOTO[c]) CAT_PHOTO[c] = SUB_PHOTOS[k]; });
   renderSide();
-  renderSlides(); renderQuick(); renderCats(); renderPersonal(); renderSections(); renderVideos(); render(); openFromHash();
+  renderSlides(); renderQuick(); renderCats(); renderPersonal(); renderSections(); renderVideos(); render();
+  if (refresh) return;
+  openFromHash();
+  const live = CSV_LIVE.splice(0);
+  Promise.all(live).then(ch => { if (ch.some(Boolean)){ CSV_REFRESH = true; loadProducts(true).finally(() => { CSV_REFRESH = false; }); } });
 }
 
 /* ---------- slider ---------- */
@@ -1569,7 +1589,7 @@ const THEMES = {green:"s1", maroon:"s2", blue:"s3", gold:"s4", red:"s5", sale:"s
 async function loadBanners(){
   try {
     const ok = r => r.title || r.highlight || ((r.theme || "").toLowerCase() === "image" && r.image);
-    let rows = parseCSV(await getCSV(CONFIG.BANNERS_CSV_URL, "banners.csv")).filter(ok);
+    let rows = parseCSV(await getCSVQuick(CONFIG.BANNERS_CSV_URL, "banners.csv")).filter(ok);
     if (!rows.length && CONFIG.BANNERS_CSV_URL) rows = parseCSV(await getCSV("", "banners.csv")).filter(ok);
     if (rows.length) SLIDES = rows.map(r => ({theme: THEMES[(r.theme || "").toLowerCase()] || "s1", kick: r.kick, title: esc(r.title) + (r.highlight ? ` <span>${esc(r.highlight)}</span>` : ""),
       text: r.text, btn: r.button || "Shop now", cat: r.category || "all", product: r.product, image: r.image, video: r.video, style: (r.style || "").toLowerCase().trim()}));
@@ -1587,7 +1607,7 @@ function renderSlides(){
     let media = "";
     if (s.video) media = `<div class="pic vid"><video src="${esc(s.video)}" muted loop playsinline autoplay preload="metadata"${img ? ` poster="${esc(img)}"` : ""}></video>${p ? `<span class="tag">${rs(p.price)}</span>` : ""}</div>`;
     else if (img && s.image && !p && s.style === "cutout") media = `<button class="pic cut" onclick="${go}" aria-label="${esc(s.btn)}"><span class="glow"></span><img src="${esc(img)}" alt=""><span class="floor"></span><span class="pchip">✦ ${esc(s.kick ? s.kick.charAt(0) + s.kick.slice(1).toLowerCase() : "New in")}</span></button>`;
-    else if (img && s.image && !p) media = `<button class="pic photo" onclick="${go}" aria-label="${esc(s.btn)}"><span class="pin">${imgs.map((u, n) => `<img class="${n ? "" : "on"}" src="${esc(u)}" alt="" ${i || n ? 'loading="lazy"' : ""}>`).join("")}</span>${imgs.length > 1 ? `<span class="pbar">${imgs.map((u, n) => `<i class="${n ? "" : "on"}"></i>`).join("")}</span>` : ""}<span class="pchip">✦ ${esc(s.kick ? s.kick.charAt(0) + s.kick.slice(1).toLowerCase() : "New in")}</span></button>`;
+    else if (img && s.image && !p) media = `<button class="pic photo" onclick="${go}" aria-label="${esc(s.btn)}"><span class="pin">${imgs.map((u, n) => `<img class="${n ? "" : "on"}" src="${esc(u)}" alt="" ${i || n ? 'loading="lazy"' : 'fetchpriority="high"'}>`).join("")}</span>${imgs.length > 1 ? `<span class="pbar">${imgs.map((u, n) => `<i class="${n ? "" : "on"}"></i>`).join("")}</span>` : ""}<span class="pchip">✦ ${esc(s.kick ? s.kick.charAt(0) + s.kick.slice(1).toLowerCase() : "New in")}</span></button>`;
     else if (img) media = `<button class="pic" onclick="${p ? `openProduct('${jsq(p.code)}')` : go}" aria-label="${esc(p ? p.name : s.btn)}"><img src="${esc(img)}" alt="">${p ? `<span class="tag">${rs(p.price)}</span>` : ""}</button>`;
     else media = `<div class="bigicon">${icon("truck")}</div>`;
     if (s.theme === "sfull" && img) return `<button class="slide sfull ${i === 0 ? "on" : ""}" onclick="${p ? `openProduct('${jsq(p.code)}')` : go}" aria-label="${esc(s.kick || s.btn || "Offer")}"><img src="${esc(img)}" alt="${esc(s.kick || "Offer")}"></button>`;
@@ -1639,7 +1659,7 @@ const catSlug = k => String(k).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace
 let CAT_PHOTO = {}, CAT_BANNER = {};
 async function loadCatInfo(){
   try {
-    parseCSV(await getCSV(CONFIG.CATS_CSV_URL, "categories.csv")).forEach(r => {
+    parseCSV(await getCSVQuick(CONFIG.CATS_CSV_URL, "categories.csv")).forEach(r => {
       const c = (r.category || "").trim(); if (!c) return;
       if ((r["photo link"] || "").trim()) CAT_PHOTO[c] = r["photo link"].trim();
       if ((r["banner photo"] || "").trim()) CAT_BANNER[c] = r["banner photo"].trim();
@@ -1675,7 +1695,7 @@ const OCCASIONS = [
 let CARDS = [];
 async function loadCards(){
   try {
-    CARDS = parseCSV(await getCSV(CONFIG.CARDS_CSV_URL, "cards.csv")).filter(r => r.title || r.image)
+    CARDS = parseCSV(await getCSVQuick(CONFIG.CARDS_CSV_URL, "cards.csv")).filter(r => r.title || r.image)
       .map(r => ({slot: (r.slot || "small").toLowerCase().trim(), title: r.title, hl: r.highlight, text: r.text, badge: r.badge, btn: r.button || "Shop now",
         color: (r.color || "cream").toLowerCase().trim(), image: r.image, type: (r.link_type || "all").toLowerCase().trim(), val: (r.link_value || "").trim()}));
   } catch (e) { CARDS = []; }
@@ -1839,7 +1859,7 @@ let fSub = "";
 let SUB_PHOTOS = {};
 async function loadSubPhotos(){
   try {
-    parseCSV(await getCSV(CONFIG.SUBS_CSV_URL, "subcategories.csv")).forEach(r => {
+    parseCSV(await getCSVQuick(CONFIG.SUBS_CSV_URL, "subcategories.csv")).forEach(r => {
       const c = (r.category || "").trim(), sb = (r.subcategory || "").trim(), ph = (r["photo link"] || r.photo || r.image || "").trim();
       if (sb && ph){ SUB_PHOTOS[c + "||" + sb] = ph; if (!SUB_PHOTOS["*||" + sb]) SUB_PHOTOS["*||" + sb] = ph; }
     });
