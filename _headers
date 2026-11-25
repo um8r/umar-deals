@@ -1,0 +1,15 @@
+# Browser caching (Cloudflare Pages). Product photos and app.js change rarely; prices/data refresh quickly.
+/app.js
+  Cache-Control: public, max-age=31536000, immutable
+/img/*
+  Cache-Control: public, max-age=604800
+/images/*
+  Cache-Control: public, max-age=604800
+/*.webp
+  Cache-Control: public, max-age=604800
+/products.csv
+  Cache-Control: public, max-age=300
+/extra_*.json
+  Cache-Control: public, max-age=1800
+/feeds/*
+  Cache-Control: public, max-age=3600
