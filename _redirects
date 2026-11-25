@@ -948,3 +948,9 @@
 /ww-075.jpg /img/ww/ww-075.jpg 301
 /ww-076.jpg /img/ww/ww-076.jpg 301
 /ww-077.jpg /img/ww/ww-077.jpg 301
+
+# Duplicate products hidden -> original product
+/p/UD-434 /p/UD-108 301
+/p/UD-434.html /p/UD-108 301
+/p/UD-2416 /p/UD-1980 301
+/p/UD-2416.html /p/UD-1980 301
